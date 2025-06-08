@@ -30,6 +30,8 @@ import Aboutimg2 from "../images/Aboutimg2.jpeg";
 import Aboutsection from "../images/AboutSection.png"
 import Svg1 from "../All_svg/Svg1.jsx"
 import Faq from '../pages/FAQ.jsx';
+import tanish from "../images/tanishq.jpg"
+import sahil from "../images/sahil.jpg"
 // --- Particle Background (copied from Home.jsx) ---
 const GradientAnimationStyle = () => (
   <style>
@@ -204,7 +206,7 @@ const ParticlesBackground = () => {
 const team = [
   {
     title: "Krish Bhagat",
-    desc: "Founder & CEO – AI/ML and web developer, FastAPI expert, and AI prompting engineer specializing in sign language translators and real-time analytics.",
+    desc: " FastAPI expert, and AI prompting engineer specializing in sign language translators and real-time analytics.",
     img: "https://www.kodrish.me/krish.png",
     linkedin: "https://www.linkedin.com/in/krishbhagat/",
     github: "https://github.com/krishbhagat",
@@ -212,16 +214,16 @@ const team = [
   },
   {
     title: "Krishna Jagtap",
-    desc: "Co-Founder & CTO – Full-stack web and app developer specializing in MERN stack, SQL, and React Native. Focused on backend development, authentication systems, and hybrid apps.",
+    desc: " Full-stack web and app developer specializing in MERN stack, SQL, and React Native. Focused on backend development, authentication systems, and hybrid apps.",
     img: "https://www.kodrish.me/krishna.png",
     linkedin: "https://www.linkedin.com/in/krishnajagtap/",
     github: "https://github.com/krishnajagtap",
     insta: "https://instagram.com/krishnajagtap"
   },
   {
-    title: "Ritik Pawar",
-    desc: "Co-Founder & CMO – Software Developer and Tech Entrepreneur with expertise in C++, Data Structures & Algorithms (DSA), and Full-Stack Web Development (MERN stack).",
-    img: "https://www.kodrish.me/ritik.png",
+    title: "Tanishq ",
+    desc: " in C++, Data Structures & Algorithms (DSA), and Full-Stack Web Development (MERN stack).",
+    img: tanish,
     linkedin: "https://www.linkedin.com/in/ritikpawar/",
     github: "https://github.com/ritikpawar",
     insta: "https://instagram.com/ritikpawar"
@@ -229,7 +231,7 @@ const team = [
   {
     title: "Sahil Sharma",
     desc: "Web Developer – Passionate full-stack web and app developer specializing in MERN stack, SQL, and React. Provides cutting-edge web apps and 3D websites.",
-    img: "https://www.kodrish.me/sahil.png",
+    img: sahil,
     linkedin: "https://www.linkedin.com/in/sahilsharma/",
     github: "https://github.com/sahilsharma",
     insta: "https://instagram.com/sahilsharma"
@@ -273,7 +275,7 @@ const About = () => {
       <div className="flex space-x-4">
         <a
           href="/login?mode=signin"
-          className="inline-flex items-center justify-center px-6 py-2 rounded-full border-2 border-black text-black font-semibold bg-[#008599] transition no-underline"
+          className="inline-flex items-center justify-center px-6 py-2 rounded-full border-2 border-black text-black font-semibold  transition no-underline bg-purple-50" 
         >
           Get started
         </a>
@@ -308,7 +310,7 @@ From scraping websites and LinkedIn to enriching lead data and auto-drafting per
                 <div className="flex space-x-4">
                   <a
   href="/login?mode=signin"
-  class="inline-flex items-center justify-center px-6 py-2 rounded-full border-2 border-black text-black font-semibold bg-[#008599]  transition no-underline"
+  class="inline-flex items-center justify-center px-6 py-2 rounded-full border-2 border-black text-black font-semibold bg-purple-100  transition no-underline"
 >
   Get started
 </a>  

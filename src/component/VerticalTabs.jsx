@@ -77,7 +77,7 @@ export default function VerticalTabs({ value, setValue }) {
     { label: 'AI Suggestion', icon: <LuBot /> },
     { label: 'Community', icon: <MdPeopleAlt /> },
     { label: 'Games', icon: <CgGames /> },
-    { label: 'Support', icon: <IoSettingsOutline /> },
+    { label: 'csv2json', icon: <IoSettingsOutline /> },
   ];
 
   return (

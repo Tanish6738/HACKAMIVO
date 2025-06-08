@@ -1,0 +1,1092 @@
+{
+    "_id": {
+        "$oid": "684558b22f1dea80e5d21964"
+    },
+    "user_id": "1234",
+    "message": "Scraping completed successfully",
+    "total_entries": {
+        "$numberInt": "94"
+    },
+    "entries_by_province": {
+        "AB": {
+            "$numberInt": "4"
+        },
+        "BC": {
+            "$numberInt": "3"
+        },
+        "MB": {
+            "$numberInt": "1"
+        },
+        "NB": {
+            "$numberInt": "1"
+        },
+        "NL": {
+            "$numberInt": "9"
+        },
+        "NS": {
+            "$numberInt": "35"
+        },
+        "NT": {
+            "$numberInt": "9"
+        },
+        "NU": {
+            "$numberInt": "9"
+        },
+        "ON": {
+            "$numberInt": "2"
+        },
+        "PE": {
+            "$numberInt": "1"
+        },
+        "QC": {
+            "$numberInt": "2"
+        },
+        "SK": {
+            "$numberInt": "9"
+        },
+        "YT": {
+            "$numberInt": "9"
+        }
+    },
+    "timestamp": "2025-06-08 15:02:33",
+    "search_params": {
+        "occupation": "resturant",
+        "city": "new york"
+    },
+    "data": [
+        {
+            "number": {
+                "$numberInt": "1"
+            },
+            "name": "Alberta Resturant Ltd",
+            "address": "8703 109 St NW Edmonton AB T6G 2L5",
+            "province_code": "AB",
+            "province_name": "Alberta",
+            "phone": "587-523-9838",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "2"
+            },
+            "name": "Wheat Garden Resturant",
+            "address": "10703 103 St NW Edmonton AB T5H 2V7",
+            "province_code": "AB",
+            "province_name": "Alberta",
+            "phone": "780-757-8166",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "3"
+            },
+            "name": "Dang Good Resturant Ltd",
+            "address": "13308 118 Ave NW Edmonton AB T5L 2L8",
+            "province_code": "AB",
+            "province_name": "Alberta",
+            "phone": "780-756-3264",
+            "website": "http://www.danggood.ca/"
+        },
+        {
+            "number": {
+                "$numberInt": "4"
+            },
+            "name": "Perry's 2 For 1 Pizza & Pasta",
+            "address": "5020 50 Ave Fort Saskatchewan AB T4J 1R5",
+            "province_code": "AB",
+            "province_name": "Alberta",
+            "phone": "780-997-9962",
+            "website": "http://perrys2for1.com/"
+        },
+        {
+            "number": {
+                "$numberInt": "5"
+            },
+            "name": "Connect Hearing",
+            "address": "1169 56 St Delta BC V4L 2A2",
+            "province_code": "BC",
+            "province_name": "British Columbia",
+            "phone": "604-948-2821",
+            "website": "https://clinics.connecthearing.ca/bc/delta/1169-56-st.html%3Futm_source%3DYext%26utm_medium%3DExtended_Network%26utm_campaign%3DYext_Listings%26y_source%3D1_MTE3NzcyMzItNjAxLWxvY2F0aW9uLndlYnNpdGU%253D"
+        },
+        {
+            "number": {
+                "$numberInt": "6"
+            },
+            "name": "NextGen Offices",
+            "address": "4388 Still Creek Dr Burnaby BC V5C 6C6",
+            "province_code": "BC",
+            "province_name": "British Columbia",
+            "phone": "604-558-5410",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "7"
+            },
+            "name": "Al's Cleaning Services Ltd",
+            "address": "7571 Davies St Burnaby BC V3N 3H2",
+            "province_code": "BC",
+            "province_name": "British Columbia",
+            "phone": "604-523-2784",
+            "website": "http://www.alscleaning.com/"
+        },
+        {
+            "number": {
+                "$numberInt": "8"
+            },
+            "name": "John And Jessie's Resturant",
+            "address": "1246 Gordon Av The Pas MB R9A 1L7",
+            "province_code": "MB",
+            "province_name": "Manitoba",
+            "phone": "204-623-4888",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "9"
+            },
+            "name": "Southwood Convenience",
+            "address": "25 Hubbard Rd Fredericton NB E3B 6B3",
+            "province_code": "NB",
+            "province_name": "New Brunswick",
+            "phone": "506-457-2152",
+            "website": "http://www.facebook.com/pages/Southwood-Convenience-Store-Restaurant/144468925592146"
+        },
+        {
+            "number": {
+                "$numberInt": "10"
+            },
+            "name": "Champs Caribbean Resturant",
+            "address": "1288 Ritson Rd N Oshawa ON L1G 7Z9",
+            "province_code": "NL",
+            "province_name": "Newfoundland and Labrador",
+            "phone": "905-576-2221",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "11"
+            },
+            "name": "Sun Ming Restaurant",
+            "address": "15 Colborne Fenelon Falls ON K0M 1N0",
+            "province_code": "NL",
+            "province_name": "Newfoundland and Labrador",
+            "phone": "705-887-2432",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "12"
+            },
+            "name": "Wolfgang's On Brock Family Resturant",
+            "address": "Whitby ON",
+            "province_code": "NL",
+            "province_name": "Newfoundland and Labrador",
+            "phone": "905-493-7733",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "13"
+            },
+            "name": "Mr Greek Resturant",
+            "address": "75 Consumers Dr Whitby ON L1N 9S2",
+            "province_code": "NL",
+            "province_name": "Newfoundland and Labrador",
+            "phone": "905-668-2332",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "14"
+            },
+            "name": "Samskruthi Resturant",
+            "address": "836 Brock St N Whitby ON L1N 4J5",
+            "province_code": "NL",
+            "province_name": "Newfoundland and Labrador",
+            "phone": "905-666-0666",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "15"
+            },
+            "name": "Judy's Place",
+            "address": "21 William S Lindsay ON K9V 3A3",
+            "province_code": "NL",
+            "province_name": "Newfoundland and Labrador",
+            "phone": "647-607-8654",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "16"
+            },
+            "name": "Burger St Resturant",
+            "address": "2460C Brock Rd Pickering ON L1X 0J1",
+            "province_code": "NL",
+            "province_name": "Newfoundland and Labrador",
+            "phone": "905-426-1004",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "17"
+            },
+            "name": "Marty Moo's",
+            "address": "2205 Keene Rd Peterborough ON K9J 6X9",
+            "province_code": "NL",
+            "province_name": "Newfoundland and Labrador",
+            "phone": "705-740-0558",
+            "website": "http://www.martymoosrestaurant.ca/"
+        },
+        {
+            "number": {
+                "$numberInt": "18"
+            },
+            "name": "Jim's Pizza & Pasta",
+            "address": "395 Aylmer St N Peterborough ON K9H 3V9",
+            "province_code": "NL",
+            "province_name": "Newfoundland and Labrador",
+            "phone": "705-400-3513",
+            "website": "http://www.jimspizzaandpasta.ca/"
+        },
+        {
+            "number": {
+                "$numberInt": "19"
+            },
+            "name": "Gisele Skaf",
+            "address": "214 Cottage St New Glasgow NS B2H 4E7",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-538-0823",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "20"
+            },
+            "name": "MOLLY'S IRISH ROSE",
+            "address": "75 Lavinia St New Glasgow NS B2H 1N5",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-755-7647",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "21"
+            },
+            "name": "Pictou County Pizza",
+            "address": "814 Granton Abercrombie Rd Abercrombie NS B2H 5C6",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-695-3037",
+            "website": "https://pictoucountypizza.com/"
+        },
+        {
+            "number": {
+                "$numberInt": "22"
+            },
+            "name": "Acropole Pizza",
+            "address": "80 Provost St New Glasgow NS B2H 2P4",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-755-9035",
+            "website": "https://acropolepizza.ca/"
+        },
+        {
+            "number": {
+                "$numberInt": "23"
+            },
+            "name": "Daley Timothy",
+            "address": "133A Provost St New Glasgow NS B2H 2P6",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-752-9399",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "24"
+            },
+            "name": "Hebel's Restaurant",
+            "address": "71 Stellarton Rd New Glasgow NS B2H 1L7",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-695-5955",
+            "website": "http://www.hebelsrestaurant.ca/"
+        },
+        {
+            "number": {
+                "$numberInt": "25"
+            },
+            "name": "Coffee Bean Kitchen",
+            "address": "Archimedes St Archimedes NS",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-755-1919",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "26"
+            },
+            "name": "Captain's Helm",
+            "address": "56 Provost NS",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-695-4356",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "27"
+            },
+            "name": "West Side Family Restaurant",
+            "address": "55 George St New Glasgow NS B2H 2K2",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-752-6269",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "28"
+            },
+            "name": "Acro Lounge And Eatery",
+            "address": "60 Archimedes St New Glasgow NS B2H 2T2",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-752-4212",
+            "website": "http://www.doolys.com/"
+        },
+        {
+            "number": {
+                "$numberInt": "29"
+            },
+            "name": "Frog and Toad Sports Bar & Grill",
+            "address": "Archimedes St New Glasgow NS B2H 2T8",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-695-3430",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "30"
+            },
+            "name": "Tim Hortons",
+            "address": "33 Main Street Trenton NS B0K 1X0",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-752-2297",
+            "website": "https://www.timhortons.ca/menu"
+        },
+        {
+            "number": {
+                "$numberInt": "31"
+            },
+            "name": "Celtic Circle Cafe",
+            "address": "15 Riverside St New Glasgow NS B2H 2N2",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-755-8972",
+            "website": "http://celticcircle.ca/"
+        },
+        {
+            "number": {
+                "$numberInt": "32"
+            },
+            "name": "East River's Monarch Restaurant at the Marina",
+            "address": "15 RIVERSIDE ST New Glasgow NS B2H 2N2",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-695-2221",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "33"
+            },
+            "name": "Burrnott",
+            "address": "New Glasgow NS",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-755-4413",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "34"
+            },
+            "name": "Dairy Queen",
+            "address": "85 Westville Rd New Glasgow NS B2H 2J2",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "N/A",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "35"
+            },
+            "name": "Ming's Restaurant",
+            "address": "211 Provost St New Glasgow NS B2H 2R2",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-752-4102",
+            "website": "http://www.mingsrestaurant.ca/"
+        },
+        {
+            "number": {
+                "$numberInt": "36"
+            },
+            "name": "Mamatu Fresh Asian Kitchen",
+            "address": "205 Provost New Glasgow NS B2H 2R2",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-755-6601",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "37"
+            },
+            "name": "Joe Chow's Restaurant",
+            "address": "29 Westville Rd New Glasgow NS B2H 2J2",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-752-4686",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "38"
+            },
+            "name": "X-TREMES RESTAURANT & LOUNGE",
+            "address": "334 Stewart St New Glasgow NS B2H 2R4",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-755-4386",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "39"
+            },
+            "name": "Crabby J's Cozy Corner",
+            "address": "265 Archimedes New Glasgow NS B2H 2V1",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-695-3345",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "40"
+            },
+            "name": "Celtic Circle Cultural Centre & Catering",
+            "address": "195 Forbes St New Glasgow NS B2H 1P4",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-755-8972",
+            "website": "https://www.facebook.com/thecelticcircle"
+        },
+        {
+            "number": {
+                "$numberInt": "41"
+            },
+            "name": "The Bistro",
+            "address": "216 Archimedes New Glasgow NS B2H 2T9",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-752-4988",
+            "website": "https://thebistronewglasgow.com/"
+        },
+        {
+            "number": {
+                "$numberInt": "42"
+            },
+            "name": "Tim Hortons",
+            "address": "242 Westville Rd New Glasgow NS B2H 2J5",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-755-1141",
+            "website": "https://www.timhortons.ca/menu"
+        },
+        {
+            "number": {
+                "$numberInt": "43"
+            },
+            "name": "Shree Curry Place",
+            "address": "261 Glasgow St New Glasgow NS B2H 5C2",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-931-0333",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "44"
+            },
+            "name": "Dairy Queen Grill & Chill",
+            "address": "85 Westville Rd New Glasgow NS B2H 2J2",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-752-4239",
+            "website": "https://www.dairyqueen.com/en-ca/locations/ns/new-glasgow/85-westville-rd/2064/%3Futm_source%3Dorganic%26utm_campaign%3Dyext%252F%26y_source%3D1_ODk5NDA0Mi02MDEtbG9jYXRpb24ud2Vic2l0ZQ%253D%253D"
+        },
+        {
+            "number": {
+                "$numberInt": "45"
+            },
+            "name": "Dine And Dash Diner",
+            "address": "102 Main St Trenton NS B0K 1X1",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-695-3300",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "46"
+            },
+            "name": "Swiss Chalet",
+            "address": "660 Westville Rd New Glasgow NS B2H 2J8",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-752-5013",
+            "website": "https://www.swisschalet.com/en/locations/ns/new-glasgow/660-westville-rd"
+        },
+        {
+            "number": {
+                "$numberInt": "47"
+            },
+            "name": "Swiss Chalet",
+            "address": "660 Westville Rd New Glasgow NS B2H 2J8",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-752-5013",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "48"
+            },
+            "name": "Burger King",
+            "address": "707 Westville Rd New Glasgow NS B2H 2L6",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-755-2204",
+            "website": "https://www.burgerking.ca/"
+        },
+        {
+            "number": {
+                "$numberInt": "49"
+            },
+            "name": "Burger King",
+            "address": "34 Nova Scotia Trunk 7 Antigonish NS B2G 0A7",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-517-3050",
+            "website": "https://www.burgerking.ca/"
+        },
+        {
+            "number": {
+                "$numberInt": "50"
+            },
+            "name": "A&W",
+            "address": "52 James St Antigonish NS B2G 1R7",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-867-1071",
+            "website": "http://www.awrestaurants.com/"
+        },
+        {
+            "number": {
+                "$numberInt": "51"
+            },
+            "name": "A&W",
+            "address": "124 North Foord St New Glasgow NS B2H 5H2",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-752-2446",
+            "website": "http://www.awfranchise.com/"
+        },
+        {
+            "number": {
+                "$numberInt": "52"
+            },
+            "name": "McDonald's",
+            "address": "700 East River Road NEW GLASGOW NS B2H 3S1",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-755-4742",
+            "website": "https://www4.mcdonalds.ca/mcdeliverycanada/%3Fy_source%3D1_MTQ1MTkzOTItNjAxLWxvY2F0aW9uLm9yZGVyX3VybA%253D%253D"
+        },
+        {
+            "number": {
+                "$numberInt": "53"
+            },
+            "name": "McDonald's",
+            "address": "37 James Street Antigonish NS B2G 1R6",
+            "province_code": "NS",
+            "province_name": "Nova Scotia",
+            "phone": "902-863-4484",
+            "website": "https://www.mcdonalds.com/ca/en-ca/full-menu.html%3Fy_source%3D1_MTQ1MTk4MjgtNjAxLWxvY2F0aW9uLm1lbnVfdXJs"
+        },
+        {
+            "number": {
+                "$numberInt": "54"
+            },
+            "name": "Champs Caribbean Resturant",
+            "address": "1288 Ritson Rd N Oshawa ON L1G 7Z9",
+            "province_code": "NT",
+            "province_name": "Northwest Territories",
+            "phone": "905-576-2221",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "55"
+            },
+            "name": "Sun Ming Restaurant",
+            "address": "15 Colborne Fenelon Falls ON K0M 1N0",
+            "province_code": "NT",
+            "province_name": "Northwest Territories",
+            "phone": "705-887-2432",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "56"
+            },
+            "name": "Wolfgang's On Brock Family Resturant",
+            "address": "Whitby ON",
+            "province_code": "NT",
+            "province_name": "Northwest Territories",
+            "phone": "905-493-7733",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "57"
+            },
+            "name": "Mr Greek Resturant",
+            "address": "75 Consumers Dr Whitby ON L1N 9S2",
+            "province_code": "NT",
+            "province_name": "Northwest Territories",
+            "phone": "905-668-2332",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "58"
+            },
+            "name": "Samskruthi Resturant",
+            "address": "836 Brock St N Whitby ON L1N 4J5",
+            "province_code": "NT",
+            "province_name": "Northwest Territories",
+            "phone": "905-666-0666",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "59"
+            },
+            "name": "Judy's Place",
+            "address": "21 William S Lindsay ON K9V 3A3",
+            "province_code": "NT",
+            "province_name": "Northwest Territories",
+            "phone": "647-607-8654",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "60"
+            },
+            "name": "Burger St Resturant",
+            "address": "2460C Brock Rd Pickering ON L1X 0J1",
+            "province_code": "NT",
+            "province_name": "Northwest Territories",
+            "phone": "905-426-1004",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "61"
+            },
+            "name": "Marty Moo's",
+            "address": "2205 Keene Rd Peterborough ON K9J 6X9",
+            "province_code": "NT",
+            "province_name": "Northwest Territories",
+            "phone": "705-740-0558",
+            "website": "http://www.martymoosrestaurant.ca/"
+        },
+        {
+            "number": {
+                "$numberInt": "62"
+            },
+            "name": "Jim's Pizza & Pasta",
+            "address": "395 Aylmer St N Peterborough ON K9H 3V9",
+            "province_code": "NT",
+            "province_name": "Northwest Territories",
+            "phone": "705-400-3513",
+            "website": "http://www.jimspizzaandpasta.ca/"
+        },
+        {
+            "number": {
+                "$numberInt": "63"
+            },
+            "name": "Champs Caribbean Resturant",
+            "address": "1288 Ritson Rd N Oshawa ON L1G 7Z9",
+            "province_code": "NU",
+            "province_name": "Nunavut",
+            "phone": "905-576-2221",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "64"
+            },
+            "name": "Sun Ming Restaurant",
+            "address": "15 Colborne Fenelon Falls ON K0M 1N0",
+            "province_code": "NU",
+            "province_name": "Nunavut",
+            "phone": "705-887-2432",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "65"
+            },
+            "name": "Wolfgang's On Brock Family Resturant",
+            "address": "Whitby ON",
+            "province_code": "NU",
+            "province_name": "Nunavut",
+            "phone": "905-493-7733",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "66"
+            },
+            "name": "Mr Greek Resturant",
+            "address": "75 Consumers Dr Whitby ON L1N 9S2",
+            "province_code": "NU",
+            "province_name": "Nunavut",
+            "phone": "905-668-2332",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "67"
+            },
+            "name": "Samskruthi Resturant",
+            "address": "836 Brock St N Whitby ON L1N 4J5",
+            "province_code": "NU",
+            "province_name": "Nunavut",
+            "phone": "905-666-0666",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "68"
+            },
+            "name": "Judy's Place",
+            "address": "21 William S Lindsay ON K9V 3A3",
+            "province_code": "NU",
+            "province_name": "Nunavut",
+            "phone": "647-607-8654",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "69"
+            },
+            "name": "Burger St Resturant",
+            "address": "2460C Brock Rd Pickering ON L1X 0J1",
+            "province_code": "NU",
+            "province_name": "Nunavut",
+            "phone": "905-426-1004",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "70"
+            },
+            "name": "Marty Moo's",
+            "address": "2205 Keene Rd Peterborough ON K9J 6X9",
+            "province_code": "NU",
+            "province_name": "Nunavut",
+            "phone": "705-740-0558",
+            "website": "http://www.martymoosrestaurant.ca/"
+        },
+        {
+            "number": {
+                "$numberInt": "71"
+            },
+            "name": "Jim's Pizza & Pasta",
+            "address": "395 Aylmer St N Peterborough ON K9H 3V9",
+            "province_code": "NU",
+            "province_name": "Nunavut",
+            "phone": "705-400-3513",
+            "website": "http://www.jimspizzaandpasta.ca/"
+        },
+        {
+            "number": {
+                "$numberInt": "72"
+            },
+            "name": "Taka Sushi",
+            "address": "340 Eagle St W Newmarket ON L3Y 7M9",
+            "province_code": "ON",
+            "province_name": "Ontario",
+            "phone": "905-836-5000",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "73"
+            },
+            "name": "Akita Sushi",
+            "address": "1-456 Holland St W Bradford ON L3Z 0G1",
+            "province_code": "ON",
+            "province_name": "Ontario",
+            "phone": "905-775-1688",
+            "website": "https://akitasushibradford.wordpress.com/about/"
+        },
+        {
+            "number": {
+                "$numberInt": "74"
+            },
+            "name": "Soper Physiotherapy",
+            "address": "23 York St Sackville NB E4L 4R3",
+            "province_code": "PE",
+            "province_name": "Prince Edward Island",
+            "phone": "506-536-8081",
+            "website": "http://www.soperphysiotherapy.com/"
+        },
+        {
+            "number": {
+                "$numberInt": "75"
+            },
+            "name": "Salon Futur-O-Quilles 2000",
+            "address": "450 Boulevard des Bois-Francs Nord Victoriaville QC G6P 1H3",
+            "province_code": "QC",
+            "province_name": "Quebec",
+            "phone": "819-758-8211",
+            "website": "http://futuroquilles2000.com/"
+        },
+        {
+            "number": {
+                "$numberInt": "76"
+            },
+            "name": "Magasin Coop de Montmagny",
+            "address": "70 Boulevard Taché Ouest Montmagny QC G5V 3A4",
+            "province_code": "QC",
+            "province_name": "Quebec",
+            "phone": "418-248-1230",
+            "website": "https://www.iga.net/fr/recherche_de_magasin/magasin/0367"
+        },
+        {
+            "number": {
+                "$numberInt": "77"
+            },
+            "name": "Champs Caribbean Resturant",
+            "address": "1288 Ritson Rd N Oshawa ON L1G 7Z9",
+            "province_code": "SK",
+            "province_name": "Saskatchewan",
+            "phone": "905-576-2221",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "78"
+            },
+            "name": "Sun Ming Restaurant",
+            "address": "15 Colborne Fenelon Falls ON K0M 1N0",
+            "province_code": "SK",
+            "province_name": "Saskatchewan",
+            "phone": "705-887-2432",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "79"
+            },
+            "name": "Wolfgang's On Brock Family Resturant",
+            "address": "Whitby ON",
+            "province_code": "SK",
+            "province_name": "Saskatchewan",
+            "phone": "905-493-7733",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "80"
+            },
+            "name": "Mr Greek Resturant",
+            "address": "75 Consumers Dr Whitby ON L1N 9S2",
+            "province_code": "SK",
+            "province_name": "Saskatchewan",
+            "phone": "905-668-2332",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "81"
+            },
+            "name": "Samskruthi Resturant",
+            "address": "836 Brock St N Whitby ON L1N 4J5",
+            "province_code": "SK",
+            "province_name": "Saskatchewan",
+            "phone": "905-666-0666",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "82"
+            },
+            "name": "Judy's Place",
+            "address": "21 William S Lindsay ON K9V 3A3",
+            "province_code": "SK",
+            "province_name": "Saskatchewan",
+            "phone": "647-607-8654",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "83"
+            },
+            "name": "Burger St Resturant",
+            "address": "2460C Brock Rd Pickering ON L1X 0J1",
+            "province_code": "SK",
+            "province_name": "Saskatchewan",
+            "phone": "905-426-1004",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "84"
+            },
+            "name": "Marty Moo's",
+            "address": "2205 Keene Rd Peterborough ON K9J 6X9",
+            "province_code": "SK",
+            "province_name": "Saskatchewan",
+            "phone": "705-740-0558",
+            "website": "http://www.martymoosrestaurant.ca/"
+        },
+        {
+            "number": {
+                "$numberInt": "85"
+            },
+            "name": "Jim's Pizza & Pasta",
+            "address": "395 Aylmer St N Peterborough ON K9H 3V9",
+            "province_code": "SK",
+            "province_name": "Saskatchewan",
+            "phone": "705-400-3513",
+            "website": "http://www.jimspizzaandpasta.ca/"
+        },
+        {
+            "number": {
+                "$numberInt": "86"
+            },
+            "name": "Champs Caribbean Resturant",
+            "address": "1288 Ritson Rd N Oshawa ON L1G 7Z9",
+            "province_code": "YT",
+            "province_name": "Yukon",
+            "phone": "905-576-2221",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "87"
+            },
+            "name": "Sun Ming Restaurant",
+            "address": "15 Colborne Fenelon Falls ON K0M 1N0",
+            "province_code": "YT",
+            "province_name": "Yukon",
+            "phone": "705-887-2432",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "88"
+            },
+            "name": "Wolfgang's On Brock Family Resturant",
+            "address": "Whitby ON",
+            "province_code": "YT",
+            "province_name": "Yukon",
+            "phone": "905-493-7733",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "89"
+            },
+            "name": "Mr Greek Resturant",
+            "address": "75 Consumers Dr Whitby ON L1N 9S2",
+            "province_code": "YT",
+            "province_name": "Yukon",
+            "phone": "905-668-2332",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "90"
+            },
+            "name": "Samskruthi Resturant",
+            "address": "836 Brock St N Whitby ON L1N 4J5",
+            "province_code": "YT",
+            "province_name": "Yukon",
+            "phone": "905-666-0666",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "91"
+            },
+            "name": "Judy's Place",
+            "address": "21 William S Lindsay ON K9V 3A3",
+            "province_code": "YT",
+            "province_name": "Yukon",
+            "phone": "647-607-8654",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "92"
+            },
+            "name": "Burger St Resturant",
+            "address": "2460C Brock Rd Pickering ON L1X 0J1",
+            "province_code": "YT",
+            "province_name": "Yukon",
+            "phone": "905-426-1004",
+            "website": "No Website"
+        },
+        {
+            "number": {
+                "$numberInt": "93"
+            },
+            "name": "Marty Moo's",
+            "address": "2205 Keene Rd Peterborough ON K9J 6X9",
+            "province_code": "YT",
+            "province_name": "Yukon",
+            "phone": "705-740-0558",
+            "website": "http://www.martymoosrestaurant.ca/"
+        },
+        {
+            "number": {
+                "$numberInt": "94"
+            },
+            "name": "Jim's Pizza & Pasta",
+            "address": "395 Aylmer St N Peterborough ON K9H 3V9",
+            "province_code": "YT",
+            "province_name": "Yukon",
+            "phone": "705-400-3513",
+            "website": "http://www.jimspizzaandpasta.ca/"
+        }
+    ]
+}

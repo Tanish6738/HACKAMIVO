@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import NavResponsive_Drawer from '../pages/NavResponsive_Drawer';
 import StarIcon from '@mui/icons-material/Star';
 import { useUser, SignOutButton } from '@clerk/clerk-react';
-import Logo from "../images/Mindfull_logo.png"; // Assuming you have a logo image
+import Logo from "../images/logo.jpg"; // Assuming you have a logo image
 
 
 const linkStyle = {
@@ -56,8 +56,8 @@ function ResponsiveAppBar() {
                 marginLeft: 2,
               }}
             >
-             <img src={Logo} alt=""  className='h-12 ml-4'/>
-              Lead Sparks
+             <img src={Logo} alt=""  className='h-24 ml-4'/>
+              
             </Typography>
           </Box>
 

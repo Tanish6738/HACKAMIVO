@@ -11,7 +11,7 @@ import Contact from './component/Contact.jsx';
 import ScrollToTop from './Scrolltotop.jsx';
 import Login from './component/Login.jsx';
 import Dashboard from './component/Dashboard.jsx';
-
+import Howitwork from './component/Howitwork.jsx';
 function App() {
   const navigate = useNavigate();
   const { isSignedIn } = useClerk();
@@ -66,6 +66,14 @@ function App() {
           }
         />
         <Route
+          path='/howitwork'
+          element={
+            <SignedOut>
+              <Howitwork />
+            </SignedOut>
+          }
+        />
+        <Route
           path='/contact'
           element={
              <SignedOut>
@@ -93,6 +101,7 @@ function App() {
             </SignedOut>
           }
         />
+          
       </Routes>
 
       <Footer />

@@ -1,661 +1,462 @@
-// import React, { useState, useEffect, useCallback } from 'react';
-// import axios from 'axios';
-// import { useUser } from '@clerk/clerk-react';
-// import moment from 'moment';
-// import {
-//   FaEdit,
-//   FaTrash,
-//   FaHeart,
-//   FaComment,
-//   FaBookmark,
-//   FaRegBookmark,
-//   FaReply,
-//   FaCheck,
-//   FaTimes,
-// } from 'react-icons/fa';
-// // https://mindfullme-update-q1z8.onrender.com
-// const API_URL = "https://krish09bha-mindful-me-community.hf.space/api/posts";
-
-// const PostCard = ({
-//   post,
-//   isUserPostTab,
-//   userId,
-//   userName,
-//   editingPostId,
-//   editPostText,
-//   setEditPostText,
-//   handleEditPost,
-//   handleEditPostSave,
-//   handleEditPostCancel,
-//   handleDeletePost,
-//   likedPosts,
-//   handleLike,
-//   savedMap,
-//   handleSave,
-//   commentInputs,
-//   handleCommentChange,
-//   handleCommentSubmit,
-//   replyInputs,
-//   setReplyInputs,
-//   handleReplyChange,
-//   handleReplySubmit,
-//   userImageUrl,
-// }) => (
-//   <div className="bg-white p-4 rounded-lg shadow-md mb-4">
-//     <div className="flex items-center gap-3 mb-2">
-//       <img
-//         src={
-//           post.imageUrl
-//             ? post.imageUrl
-//             : `https://ui-avatars.com/api/?name=${encodeURIComponent(
-//                 post.name
-//               )}&background=random`
-//         }
-//         className="w-9 h-9 rounded-full object-cover"
-//         alt="Post Author"
-//       />
-//       <div>
-//         <p className="font-semibold text-gray-800">{post.name}</p>
-//         <p className="text-xs text-gray-500">
-//           {moment(post.createdAt).fromNow()}
-//         </p>
-//       </div>
-//       {isUserPostTab && post.userId === userId && (
-//         <div className="ml-auto flex gap-2">
-//           <button
-//             className="text-blue-500 hover:text-blue-700"
-//             title="Edit"
-//             onClick={() => handleEditPost(post)}
-//           >
-//             <FaEdit />
-//           </button>
-//           <button
-//             className="text-red-500 hover:text-red-700"
-//             title="Delete"
-//             onClick={() => handleDeletePost(post._id)}
-//           >
-//             <FaTrash />
-//           </button>
-//         </div>
-//       )}
-//     </div>
-//     {editingPostId === post._id ? (
-//       <div className="flex flex-col gap-2">
-//         <textarea
-//           value={editPostText}
-//           onChange={(e) => setEditPostText(e.target.value)}
-//           className="w-full border border-gray-300 rounded p-2 resize-none text-sm"
-//           rows="3"
-//         />
-//         <div className="flex gap-2">
-//           <button
-//             className="px-3 py-1 bg-green-500 text-white rounded text-sm hover:bg-green-600 transition flex items-center gap-1"
-//             onClick={() => handleEditPostSave(post._id)}
-//           >
-//             <FaCheck /> Save
-//           </button>
-//           <button
-//             className="px-3 py-1 bg-gray-300 text-gray-700 rounded text-sm hover:bg-gray-400 transition flex items-center gap-1"
-//             onClick={handleEditPostCancel}
-//           >
-//             <FaTimes /> Cancel
-//           </button>
-//         </div>
-//       </div>
-//     ) : (
-//       <p className="mt-2 text-gray-700 text-sm">{post.text}</p>
-//     )}
-//     <div className="flex flex-wrap gap-2 mt-2">
-//       {post.tags?.map((tag, i) => (
-//         <span
-//           key={i}
-//           className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full"
-//         >
-//           #{tag}
-//         </span>
-//       ))}
-//     </div>
-//     <div className="flex gap-5 text-sm text-gray-600 mt-3">
-//       <button
-//         onClick={() => handleLike(post._id)}
-//         className={`flex items-center gap-1 transition ${
-//           likedPosts[post._id] ? "text-red-500" : "hover:text-red-500"
-//         }`}
-//       >
-//         <FaHeart /> {Array.isArray(post.likes) ? post.likes.length : post.likes}
-//       </button>
-//       <span className="flex items-center gap-1">
-//         <FaComment /> {post.commentsCount}
-//       </span>
-//       <button
-//         onClick={() => handleSave(post._id, !!savedMap[post._id], isUserPostTab)}
-//         className={`flex items-center gap-1 transition ${
-//           savedMap[post._id] ? "text-yellow-500" : "hover:text-yellow-500"
-//         }`}
-//         title={savedMap[post._id] ? "Unsave" : "Save"}
-//       >
-//         {savedMap[post._id] ? <FaBookmark /> : <FaRegBookmark />}{" "}
-//         {savedMap[post._id] ? "Saved" : "Save"}
-//       </button>
-//     </div>
-//     <div className="mt-3">
-//       <input
-//         type="text"
-//         placeholder="Add a comment..."
-//         value={commentInputs[post._id] || ""}
-//         onChange={(e) => handleCommentChange(post._id, e.target.value)}
-//         className="w-full border border-gray-300 rounded p-1 text-sm"
-//       />
-//       <button
-//         onClick={() => handleCommentSubmit(post._id)}
-//         className="mt-1 px-3 py-1 bg-green-500 text-white rounded text-sm hover:bg-green-600 transition"
-//       >
-//         Comment
-//       </button>
-//     </div>
-//     <div className="mt-3 space-y-2">
-//       {post.comments &&
-//         post.comments.slice().reverse().map((cmt, i) => (
-//           <div
-//             key={cmt._id || i}
-//             className="flex flex-col gap-1 pl-2 border-l-2 border-gray-200"
-//           >
-//             <div className="flex items-start gap-2">
-//               <img
-//                 src={
-//                   cmt.imageUrl
-//                     ? cmt.imageUrl
-//                     : `https://ui-avatars.com/api/?name=${encodeURIComponent(
-//                         cmt.name
-//                       )}&background=random`
-//                 }
-//                 alt="Commenter"
-//                 className="w-6 h-6 rounded-full mt-1"
-//               />
-//               <div>
-//                 <p className="text-sm">
-//                   <span className="font-semibold">{cmt.name}</span>:{" "}
-//                   {cmt.text}
-//                 </p>
-//                 <p className="text-xs text-gray-400">
-//                   {moment(cmt.time).fromNow()}
-//                 </p>
-//                 <button
-//                   className="text-xs text-blue-500 hover:underline flex items-center gap-1 mt-1"
-//                   onClick={() =>
-//                     setReplyInputs({
-//                       ...replyInputs,
-//                       [cmt._id]: replyInputs[cmt._id] === undefined ? "" : undefined,
-//                     })
-//                   }
-//                 >
-//                   <FaReply className="text-xs" /> Reply
-//                 </button>
-//               </div>
-//             </div>
-//             {replyInputs[cmt._id] !== undefined && (
-//               <div className="ml-8 mt-2">
-//                 <input
-//                   type="text"
-//                   placeholder="Add a reply..."
-//                   value={replyInputs[cmt._id] || ""}
-//                   onChange={(e) =>
-//                     handleReplyChange(cmt._id, e.target.value)
-//                   }
-//                   className="w-full border border-gray-300 rounded p-1 text-sm"
-//                 />
-//                 <button
-//                   onClick={() => handleReplySubmit(post._id, cmt._id)}
-//                   className="mt-1 px-3 py-1 bg-blue-500 text-white rounded text-sm hover:bg-blue-600 transition"
-//                 >
-//                   Reply
-//                 </button>
-//               </div>
-//             )}
-//             {cmt.replies && cmt.replies.length > 0 && (
-//               <div className="ml-8 mt-2 space-y-1">
-//                 {cmt.replies
-//                   .slice()
-//                   .reverse()
-//                   .map((reply, j) => (
-//                     <div key={j} className="flex items-start gap-2">
-//                       <img
-//                         src={
-//                           reply.imageUrl
-//                             ? reply.imageUrl
-//                             : `https://ui-avatars.com/api/?name=${encodeURIComponent(
-//                                 reply.name
-//                               )}&background=random`
-//                         }
-//                         alt="Replier"
-//                         className="w-5 h-5 rounded-full mt-1"
-//                       />
-//                       <div>
-//                         <p className="text-xs">
-//                           <span className="font-semibold">
-//                             {reply.name}
-//                           </span>
-//                           : {reply.text}
-//                         </p>
-//                         <p className="text-xs text-gray-400">
-//                           {moment(reply.time).fromNow()}
-//                         </p>
-//                       </div>
-//                     </div>
-//                   ))}
-//               </div>
-//             )}
-//           </div>
-//         ))}
-//     </div>
-//   </div>
-// );
-
-// const Item7 = () => {
-//   const { user, isLoaded, isSignedIn } = useUser();
-//   const userName = user?.fullName || "Anonymous User";
-//   const userId = user?.id;
-
-//   const [tabValue, setTabValue] = useState(0);
-//   const [userPosts, setUserPosts] = useState([]);
-//   const [savedPosts, setSavedPosts] = useState([]);
-//   const [likedPosts, setLikedPosts] = useState({});
-//   const [savedMap, setSavedMap] = useState({});
-//   const [editingPostId, setEditingPostId] = useState(null);
-//   const [editPostText, setEditPostText] = useState("");
-//   const [commentInputs, setCommentInputs] = useState({});
-//   const [replyInputs, setReplyInputs] = useState({});
-//   const [loadingUserPosts, setLoadingUserPosts] = useState(false);
-//   const [loadingSavedPosts, setLoadingSavedPosts] = useState(false);
-
-//   const fetchUserPosts = useCallback(async () => {
-//     if (!userId) return;
-//     setLoadingUserPosts(true);
-//     try {
-//       const response = await axios.get(`${API_URL}?userId=${userId}`);
-//       const postsData = (response.data || []).filter(post => post.userId === userId);
-//       setUserPosts(postsData);
-
-//       const initialLikedPosts = {};
-//       const initialSavedMap = {};
-//       postsData.forEach((post) => {
-//         if (Array.isArray(post.likes) && post.likes.includes(userId)) {
-//           initialLikedPosts[post._id] = true;
-//         }
-//         if (Array.isArray(post.savedBy) && post.savedBy.includes(userId)) {
-//           initialSavedMap[post._id] = true;
-//         }
-//       });
-//       setLikedPosts(initialLikedPosts);
-//       setSavedMap(initialSavedMap);
-//     } catch (error) {
-//       console.error("Error fetching user posts:", error);
-//       setUserPosts([]);
-//     } finally {
-//       setLoadingUserPosts(false);
-//     }
-//   }, [userId]);
-
-//   const fetchSavedPosts = useCallback(async () => {
-//     if (!userId) return;
-//     setLoadingSavedPosts(true);
-//     try {
-//       const response = await axios.get(`${API_URL}/saved/${userId}`);
-//       setSavedPosts(response.data || []);
-//       const initialSavedMap = {};
-//       (response.data || []).forEach(post => {
-//         initialSavedMap[post._id] = true;
-//       });
-//       setSavedMap(initialSavedMap);
-//     } catch (error) {
-//       console.error("Error fetching saved posts:", error);
-//       setSavedPosts([]);
-//     } finally {
-//       setLoadingSavedPosts(false);
-//     }
-//   }, [userId]);
-
-//   useEffect(() => {
-//     if (isLoaded && isSignedIn) {
-//       if (tabValue === 0) {
-//         fetchUserPosts();
-//       } else if (tabValue === 1) {
-//         fetchSavedPosts();
-//       }
-//     }
-//   }, [isLoaded, isSignedIn, tabValue, fetchUserPosts, fetchSavedPosts]);
-
-//   const handleTabChange = (event, newValue) => {
-//     setTabValue(newValue);
-//   };
-
-//   const handleEditPost = (post) => {
-//     setEditingPostId(post._id);
-//     setEditPostText(post.text);
-//   };
-
-//   const handleEditPostSave = async (postId) => {
-//     if (!editPostText.trim()) return;
-//     try {
-//       const res = await axios.patch(`${API_URL}/${postId}`, {
-//         text: editPostText,
-//         userId: userId,
-//       });
-//       setUserPosts((prevPosts) =>
-//         prevPosts.map((post) => (post._id === postId ? res.data : post))
-//       );
-//       setEditingPostId(null);
-//       setEditPostText("");
-//     } catch (err) {
-//       console.error("Error editing post:", err);
-//       alert("Failed to edit post. Please try again.");
-//     }
-//   };
-
-//   const handleEditPostCancel = () => {
-//     setEditingPostId(null);
-//     setEditPostText("");
-//   };
-
-//   const handleDeletePost = async (postId) => {
-//     if (!window.confirm("Are you sure you want to delete this post?")) return;
-//     try {
-//       await axios.delete(`${API_URL}/${postId}`, { data: { userId: userId } });
-//       setUserPosts((prevPosts) => prevPosts.filter((post) => post._id !== postId));
-//     } catch (err) {
-//       if (err.response && err.response.data && err.response.data.error) {
-//         alert(err.response.data.error);
-//       } else {
-//         alert("Failed to delete post. Please try again.");
-//       }
-//       console.error("Error deleting post:", err);
-//     }
-//   };
-
-//   const handleLike = async (postId) => {
-//     if (!userId) {
-//       alert("Please log in to like posts.");
-//       return;
-//     }
-//     try {
-//       const res = await axios.patch(`${API_URL}/${postId}/like`, { userId });
-//       setUserPosts((prevPosts) =>
-//         prevPosts.map((post) => (post._id === postId ? res.data : post))
-//       );
-//       setSavedPosts((prevPosts) =>
-//         prevPosts.map((post) => (post._id === postId ? res.data : post))
-//       );
-//       setLikedPosts((prev) => ({ ...prev, [postId]: !prev[postId] }));
-//     } catch (err) {
-//       console.error("Error liking post:", err);
-//       alert("Failed to like/unlike post. Please try again.");
-//     }
-//   };
-
-//   const handleSave = async (postId, isSaved, isUserPostTab) => {
-//     if (!userId) {
-//       alert("Please log in to save posts.");
-//       return;
-//     }
-//     try {
-//       const res = await axios.patch(`${API_URL}/${postId}/save`, { userId });
-//       setSavedMap((prev) => ({ ...prev, [postId]: !isSaved }));
-//       if (isUserPostTab) {
-//         setUserPosts((prevPosts) =>
-//           prevPosts.map((post) => (post._id === postId ? res.data : post))
-//         );
-//       } else {
-//         if (isSaved) {
-//           setSavedPosts((prev) => prev.filter((post) => post._id !== postId));
-//         } else {
-//           setSavedPosts((prev) =>
-//             prev.map((post) => (post._id === postId ? res.data : post))
-//           );
-//         }
-//       }
-//     } catch (err) {
-//       console.error("Error saving/unsaving post:", err);
-//       alert("Failed to save/unsave post. Please try again.");
-//     }
-//   };
-
-//   const handleCommentChange = (postId, value) => {
-//     setCommentInputs((prev) => ({ ...prev, [postId]: value }));
-//   };
-
-//   const handleCommentSubmit = async (postId) => {
-//     const commentText = commentInputs[postId];
-//     if (!commentText || !commentText.trim()) return;
-//     if (!userId) {
-//       alert("Please log in to comment.");
-//       return;
-//     }
-//     try {
-//       const res = await axios.post(`${API_URL}/${postId}/comment`, {
-//         userId,
-//         name: userName,
-//         imageUrl: user.imageUrl,
-//         text: commentText,
-//       });
-//       setUserPosts((prevPosts) =>
-//         prevPosts.map((post) => (post._id === postId ? res.data : post))
-//       );
-//       setSavedPosts((prevPosts) =>
-//         prevPosts.map((post) => (post._id === postId ? res.data : post))
-//       );
-//       setCommentInputs((prev) => ({ ...prev, [postId]: "" }));
-//     } catch (err) {
-//       console.error("Error submitting comment:", err);
-//       alert("Failed to add comment. Please try again.");
-//     }
-//   };
-
-//   const handleReplyChange = (commentId, value) => {
-//     setReplyInputs((prev) => ({ ...prev, [commentId]: value }));
-//   };
-
-//   const handleReplySubmit = async (postId, commentId) => {
-//     const replyText = replyInputs[commentId];
-//     if (!replyText || !replyText.trim()) return;
-//     if (!userId) {
-//       alert("Please log in to reply.");
-//       return;
-//     }
-//     try {
-//       const res = await axios.post(
-//         `${API_URL}/${postId}/comments/${commentId}/reply`,
-//         {
-//           userId,
-//           name: userName,
-//           imageUrl: user.imageUrl,
-//           text: replyText,
-//         }
-//       );
-//       setUserPosts((prevPosts) =>
-//         prevPosts.map((post) => (post._id === postId ? res.data : post))
-//       );
-//       setSavedPosts((prevPosts) =>
-//         prevPosts.map((post) => (post._id === postId ? res.data : post))
-//       );
-//       setReplyInputs((prev) => ({ ...prev, [commentId]: undefined }));
-//     } catch (err) {
-//       console.error("Error submitting reply:", err);
-//       alert("Failed to add reply. Please try again.");
-//     }
-//   };
-
-//   if (!isLoaded) {
-//     return (
-//       <div className="flex justify-center mt-10">
-//         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
-//       </div>
-//     );
-//   }
-
-//   if (!isSignedIn) {
-//     return (
-//       <div className="max-w-2xl mx-auto mt-8 text-center text-gray-500">
-//         Please sign in to view your profile and posts.
-//       </div>
-//     );
-//   }
-
-//   const filteredUserPosts = userPosts.filter(post => post.userId === userId);
-
-//   return (
-//     <div className="max-w-2xl mx-auto mt-8 w-full">
-//       {/* Profile Header */}
-//       <div className="flex items-center mb-6">
-//         <img
-//           src={user.imageUrl}
-//           alt={user.fullName}
-//           className="w-24 h-24 rounded-full mr-6 object-cover"
-//         />
-//         <div>
-//           <div className="text-2xl font-bold">{userName}</div>
-//           <div className="text-gray-500">{user.primaryEmailAddress?.emailAddress}</div>
-//           <div className="flex gap-6 mt-2">
-//             <span>
-//               <strong>{filteredUserPosts.length}</strong> posts
-//             </span>
-//             <span>
-//               <strong>{savedPosts.length}</strong> Saved post
-//             </span>
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* Tabs */}
-//       <div className="flex border-b mb-6">
-//         <button
-//           className={`px-4 py-2 font-semibold ${
-//             tabValue === 0
-//               ? "border-b-2 border-blue-500 text-blue-600"
-//               : "text-gray-500"
-//           }`}
-//           onClick={() => setTabValue(0)}
-//         >
-//           Posts
-//         </button>
-//         <button
-//           className={`px-4 py-2 font-semibold ${
-//             tabValue === 1
-//               ? "border-b-2 border-blue-500 text-blue-600"
-//               : "text-gray-500"
-//           }`}
-//           onClick={() => setTabValue(1)}
-//         >
-//           Saved
-//         </button>
-//       </div>
-
-//       {/* Tab Content */}
-//       {tabValue === 0 && (
-//         <div>
-//           {loadingUserPosts ? (
-//             <div className="flex justify-center items-center py-10">
-//               <svg className="animate-spin text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48" width="60" height="60">
-//                 <circle className="opacity-25" cx="24" cy="24" r="20" stroke="currentColor" strokeWidth="6"></circle>
-//                 <path className="opacity-75" fill="currentColor" d="M8 24a16 16 0 0132 0h-8z"></path>
-//               </svg>
-//               <span className="ml-4 text-green-700 text-lg font-semibold">Loading posts...</span>
-//             </div>
-//           ) : filteredUserPosts.length > 0 ? (
-//             filteredUserPosts.map((post) => (
-//               <PostCard
-//                 key={post._id}
-//                 post={post}
-//                 isUserPostTab={true}
-//                 userId={userId}
-//                 userName={userName}
-//                 editingPostId={editingPostId}
-//                 editPostText={editPostText}
-//                 setEditPostText={setEditPostText}
-//                 handleEditPost={handleEditPost}
-//                 handleEditPostSave={handleEditPostSave}
-//                 handleEditPostCancel={handleEditPostCancel}
-//                 handleDeletePost={handleDeletePost}
-//                 likedPosts={likedPosts}
-//                 handleLike={handleLike}
-//                 savedMap={savedMap}
-//                 handleSave={handleSave}
-//                 commentInputs={commentInputs}
-//                 handleCommentChange={handleCommentChange}
-//                 handleCommentSubmit={handleCommentSubmit}
-//                 replyInputs={replyInputs}
-//                 setReplyInputs={setReplyInputs}
-//                 handleReplyChange={handleReplyChange}
-//                 handleReplySubmit={handleReplySubmit}
-//                 userImageUrl={user.imageUrl}
-//               />
-//             ))
-//           ) : (
-//             <div className="text-center text-gray-400 py-8">
-//               You haven't made any posts yet.
-//             </div>
-//           )}
-//         </div>
-//       )}
-
-//       {tabValue === 1 && (
-//         <div>
-//           {loadingSavedPosts ? (
-//             <div className="flex justify-center items-center py-10">
-//               <svg className="animate-spin text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48" width="60" height="60">
-//                 <circle className="opacity-25" cx="24" cy="24" r="20" stroke="currentColor" strokeWidth="6"></circle>
-//                 <path className="opacity-75" fill="currentColor" d="M8 24a16 16 0 0132 0h-8z"></path>
-//               </svg>
-//               <span className="ml-4 text-green-700 text-lg font-semibold">Loading saved posts...</span>
-//             </div>
-//           ) : savedPosts.length > 0 ? (
-//             savedPosts.map((post) => (
-//               <PostCard
-//                 key={post._id}
-//                 post={post}
-//                 isUserPostTab={false}
-//                 userId={userId}
-//                 userName={userName}
-//                 editingPostId={editingPostId}
-//                 editPostText={editPostText}
-//                 setEditPostText={setEditPostText}
-//                 handleEditPost={handleEditPost}
-//                 handleEditPostSave={handleEditPostSave}
-//                 handleEditPostCancel={handleEditPostCancel}
-//                 handleDeletePost={handleDeletePost}
-//                 likedPosts={likedPosts}
-//                 handleLike={handleLike}
-//                 savedMap={savedMap}
-//                 handleSave={handleSave}
-//                 commentInputs={commentInputs}
-//                 handleCommentChange={handleCommentChange}
-//                 handleCommentSubmit={handleCommentSubmit}
-//                 replyInputs={replyInputs}
-//                 setReplyInputs={setReplyInputs}
-//                 handleReplyChange={handleReplyChange}
-//                 handleReplySubmit={handleReplySubmit}
-//                 userImageUrl={user.imageUrl}
-//               />
-//             ))
-//           ) : (
-//             <div className="text-center text-gray-400 py-8">
-//               No saved posts.
-//             </div>
-//           )}
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Item7;
-
-
-import React from 'react'
+import React, { useState, useRef } from 'react';
+import { 
+  csvFileToJson, 
+  csvStringToJson, 
+  jsonToCsvString, 
+  downloadJsonAsCsv, 
+  validateCsvData, 
+  getCsvStatistics 
+} from '../services/csv-to-json.js';
 
 const Item7 = () => {
-  return (
-    <div>Item7</div>
-  )
-}
+  const [csvData, setCsvData] = useState('');
+  const [jsonData, setJsonData] = useState(null);
+  const [statistics, setStatistics] = useState(null);
+  const [validation, setValidation] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const [activeTab, setActiveTab] = useState('file'); // 'file' or 'text'
+  const [conversionOptions, setConversionOptions] = useState({
+    delimiter: ',',
+    hasHeaders: true,
+    skipEmptyLines: true,
+    trimValues: true
+  });
+  const fileInputRef = useRef(null);
 
-export default Item7
+  // Handle file upload
+  const handleFileUpload = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    setIsLoading(true);
+    setError('');
+    setSuccess('');
+
+    try {
+      const result = await csvFileToJson(file, conversionOptions);
+      setJsonData(result);
+      setStatistics(getCsvStatistics(result));
+      setSuccess(`Successfully converted ${result.length} rows from CSV to JSON!`);
+    } catch (err) {
+      setError(`Error converting file: ${err.message}`);
+      setJsonData(null);
+      setStatistics(null);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Handle text input conversion
+  const handleTextConversion = () => {
+    if (!csvData.trim()) {
+      setError('Please enter CSV data');
+      return;
+    }
+
+    setIsLoading(true);
+    setError('');
+    setSuccess('');
+
+    try {
+      // Validate CSV data first
+      const validationResult = validateCsvData(csvData, conversionOptions);
+      setValidation(validationResult);
+
+      if (!validationResult.isValid) {
+        setError(`CSV validation failed: ${validationResult.errors.join(', ')}`);
+        setIsLoading(false);
+        return;
+      }
+
+      // Convert to JSON
+      const result = csvStringToJson(csvData, conversionOptions);
+      setJsonData(result);
+      setStatistics(getCsvStatistics(result));
+      setSuccess(`Successfully converted ${result.length} rows from CSV to JSON!`);
+    } catch (err) {
+      setError(`Error converting data: ${err.message}`);
+      setJsonData(null);
+      setStatistics(null);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Download JSON as file
+  const downloadJson = () => {
+    if (!jsonData) return;
+
+    try {
+      const dataStr = JSON.stringify(jsonData, null, 2);
+      const dataBlob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(dataBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'converted-data.json';
+      link.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      setError(`Error downloading JSON: ${err.message}`);
+    }
+  };
+
+  // Download as CSV (convert back)
+  const downloadCsv = () => {
+    if (!jsonData) return;
+
+    try {
+      downloadJsonAsCsv(jsonData, 'converted-data.csv', {
+        delimiter: conversionOptions.delimiter,
+        includeHeaders: conversionOptions.hasHeaders
+      });
+    } catch (err) {
+      setError(`Error downloading CSV: ${err.message}`);
+    }
+  };
+
+  // Clear all data
+  const clearData = () => {
+    setCsvData('');
+    setJsonData(null);
+    setStatistics(null);
+    setValidation(null);
+    setError('');
+    setSuccess('');
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="flex items-center justify-center mb-4">
+            <svg className="w-12 h-12 text-blue-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+            </svg>
+            <h1 className="text-4xl font-bold text-gray-900">CSV to JSON Converter</h1>
+          </div>
+          <p className="text-xl text-gray-600">Convert your CSV data to JSON format with advanced options</p>
+        </div>
+
+        {/* Input Method Tabs */}
+        <div className="mb-6">
+          <div className="flex space-x-1 bg-gray-200 rounded-lg p-1 max-w-md mx-auto">
+            <button
+              onClick={() => setActiveTab('file')}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+                activeTab === 'file'
+                  ? 'bg-white text-blue-600 shadow-sm'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              Upload File
+            </button>
+            <button
+              onClick={() => setActiveTab('text')}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+                activeTab === 'text'
+                  ? 'bg-white text-blue-600 shadow-sm'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              Paste Text
+            </button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Input Section */}
+          <div className="lg:col-span-2">
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                <svg className="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                </svg>
+                CSV Input
+              </h2>
+
+              {/* File Upload Tab */}
+              {activeTab === 'file' && (
+                <div className="space-y-4">
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-400 transition-colors">
+                    <svg className="mx-auto h-12 w-12 text-gray-400 mb-4" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                      <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    <div className="text-sm text-gray-600 mb-2">
+                      <label htmlFor="file-upload" className="cursor-pointer">
+                        <span className="mt-2 block text-sm font-medium text-blue-600 hover:text-blue-500">
+                          Click to upload a CSV file
+                        </span>
+                        <input
+                          id="file-upload"
+                          ref={fileInputRef}
+                          type="file"
+                          accept=".csv"
+                          onChange={handleFileUpload}
+                          className="sr-only"
+                        />
+                      </label>
+                    </div>
+                    <p className="text-xs text-gray-500">CSV files only, up to 10MB</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Text Input Tab */}
+              {activeTab === 'text' && (
+                <div className="space-y-4">
+                  <textarea
+                    value={csvData}
+                    onChange={(e) => setCsvData(e.target.value)}
+                    placeholder="Paste your CSV data here...&#10;Example:&#10;name,email,age&#10;John Doe,john@example.com,30&#10;Jane Smith,jane@example.com,25"
+                    className="w-full h-64 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none font-mono text-sm"
+                  />
+                  <button
+                    onClick={handleTextConversion}
+                    disabled={isLoading || !csvData.trim()}
+                    className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    {isLoading ? 'Converting...' : 'Convert to JSON'}
+                  </button>
+                </div>
+              )}
+
+              {/* Messages */}
+              {error && (
+                <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+                  <div className="flex">
+                    <svg className="w-5 h-5 text-red-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                    </svg>
+                    <p className="text-sm text-red-700">{error}</p>
+                  </div>
+                </div>
+              )}
+
+              {success && (
+                <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                  <div className="flex">
+                    <svg className="w-5 h-5 text-green-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <p className="text-sm text-green-700">{success}</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Validation Errors */}
+              {validation && !validation.isValid && (
+                <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                  <h4 className="text-sm font-medium text-yellow-800 mb-2">Validation Issues:</h4>
+                  <ul className="text-sm text-yellow-700 list-disc list-inside">
+                    {validation.errors.map((error, index) => (
+                      <li key={index}>{error}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Options Panel */}
+          <div className="space-y-6">
+            {/* Conversion Options */}
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                <svg className="w-5 h-5 text-purple-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
+                </svg>
+                Options
+              </h3>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Delimiter
+                  </label>
+                  <select
+                    value={conversionOptions.delimiter}
+                    onChange={(e) => setConversionOptions(prev => ({ ...prev, delimiter: e.target.value }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  >
+                    <option value=",">Comma (,)</option>
+                    <option value=";">Semicolon (;)</option>
+                    <option value="\t">Tab</option>
+                    <option value="|">Pipe (|)</option>
+                  </select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={conversionOptions.hasHeaders}
+                      onChange={(e) => setConversionOptions(prev => ({ ...prev, hasHeaders: e.target.checked }))}
+                      className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+                    />
+                    <span className="ml-2 text-sm text-gray-700">First row contains headers</span>
+                  </label>
+
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={conversionOptions.skipEmptyLines}
+                      onChange={(e) => setConversionOptions(prev => ({ ...prev, skipEmptyLines: e.target.checked }))}
+                      className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+                    />
+                    <span className="ml-2 text-sm text-gray-700">Skip empty lines</span>
+                  </label>
+
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={conversionOptions.trimValues}
+                      onChange={(e) => setConversionOptions(prev => ({ ...prev, trimValues: e.target.checked }))}
+                      className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+                    />
+                    <span className="ml-2 text-sm text-gray-700">Trim whitespace</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            {/* Statistics */}
+            {statistics && (
+              <div className="bg-white rounded-xl shadow-lg p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                  <svg className="w-5 h-5 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+                  </svg>
+                  Statistics
+                </h3>
+                <div className="space-y-3">
+                  <div className="flex justify-between">
+                    <span className="text-sm text-gray-600">Total Rows:</span>
+                    <span className="text-sm font-medium">{statistics.totalRows}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm text-gray-600">Total Columns:</span>
+                    <span className="text-sm font-medium">{statistics.totalColumns}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm text-gray-600">Empty Values:</span>
+                    <span className="text-sm font-medium">{statistics.emptyValues}</span>
+                  </div>
+                  
+                  {statistics.columnNames.length > 0 && (
+                    <div>
+                      <p className="text-sm text-gray-600 mb-2">Column Types:</p>
+                      <div className="space-y-1">
+                        {statistics.columnNames.slice(0, 5).map(column => (
+                          <div key={column} className="flex justify-between text-xs">
+                            <span className="text-gray-600 truncate mr-2">{column}:</span>
+                            <span className={`px-2 py-0.5 rounded text-xs font-medium ${
+                              statistics.columnTypes[column] === 'number' ? 'bg-blue-100 text-blue-800' :
+                              statistics.columnTypes[column] === 'boolean' ? 'bg-green-100 text-green-800' :
+                              'bg-gray-100 text-gray-800'
+                            }`}>
+                              {statistics.columnTypes[column]}
+                            </span>
+                          </div>
+                        ))}
+                        {statistics.columnNames.length > 5 && (
+                          <p className="text-xs text-gray-500">+{statistics.columnNames.length - 5} more columns</p>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Action Buttons */}
+            {jsonData && (
+              <div className="bg-white rounded-xl shadow-lg p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                  <svg className="w-5 h-5 text-indigo-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                  Download
+                </h3>
+                <div className="space-y-3">
+                  <button
+                    onClick={downloadJson}
+                    className="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors"
+                  >
+                    Download JSON
+                  </button>
+                  <button
+                    onClick={downloadCsv}
+                    className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors"
+                  >
+                    Download as CSV
+                  </button>
+                  <button
+                    onClick={clearData}
+                    className="w-full bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors"
+                  >
+                    Clear All Data
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* JSON Output */}
+        {jsonData && (
+          <div className="mt-6 bg-white rounded-xl shadow-lg p-6">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-semibold text-gray-900 flex items-center">
+                <svg className="w-5 h-5 text-orange-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                </svg>
+                JSON Output ({jsonData.length} records)
+              </h3>
+              <div className="flex space-x-2">
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(JSON.stringify(jsonData, null, 2));
+                    setSuccess('JSON copied to clipboard!');
+                    setTimeout(() => setSuccess(''), 3000);
+                  }}
+                  className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700 transition-colors"
+                >
+                  Copy JSON
+                </button>
+              </div>
+            </div>
+            
+            <div className="bg-gray-50 rounded-lg p-4 max-h-96 overflow-auto">
+              <pre className="text-sm text-gray-800 whitespace-pre-wrap">
+                {JSON.stringify(jsonData.slice(0, 10), null, 2)}
+                {jsonData.length > 10 && (
+                  <div className="text-gray-500 italic mt-2">
+                    ... and {jsonData.length - 10} more records
+                  </div>
+                )}
+              </pre>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Loading Overlay */}
+      {isLoading && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-8 flex flex-col items-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
+            <p className="text-gray-700 text-center">Converting CSV to JSON...</p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Item7;

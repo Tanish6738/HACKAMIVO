@@ -1,721 +1,433 @@
-// import React, { useEffect, useState } from "react";
-// import axios from "axios";
-// import {
-//   FaUserCircle,
-//   FaHeart,
-//   FaComment,
-//   FaBookmark,
-//   FaRegBookmark,
-//   FaReply,
-//   FaTrash,
-//   FaEdit,
-//   FaCheck,
-//   FaTimes,
-//   FaPlus,
-// } from "react-icons/fa";
-// import { LuSmilePlus } from "react-icons/lu";
-// import { useUser } from "@clerk/clerk-react";
-// import moment from "moment";
-
-// const suggestedTags = [
-//   "MentalHealth",
-//   "Mindfulness",
-//   "Wellness",
-//   "Support",
-//   "Gratitude",
-//   "Anxiety",
-//   "Depression",
-// ];
-// const emojiList = [
-//   "😊",
-//   "😄",
-//   "😍",
-//   "👍",
-//   "🙏",
-//   "❤️",
-//   "😂",
-//   "😢",
-//   "🤩",
-//   "🎉",
-// ];
-
-// const API_URL = "https://krish09bha-mindful-me-community.hf.space/api/posts";
-
-// const Item6 = () => {
-//   const { user, isLoaded, isSignedIn } = useUser();
-//   const userName = user?.fullName || "Anonymous";
-//   const userProfileImageUrl = user?.imageUrl || "";
-//   const userId = user?.id;
-
-//   useEffect(() => {
-//   console.log("userId:", userId);
-//   if (userId) {
-//     fetchPosts();
-//   }
-// }, [userId]);
-
-//   const [posts, setPosts] = useState([]);
-//   const [newPost, setNewPost] = useState("");
-//   const [commentInputs, setCommentInputs] = useState({});
-//   const [replyInputs, setReplyInputs] = useState({});
-//   const [likedPosts, setLikedPosts] = useState({});
-//   const [savedMap, setSavedMap] = useState({});
-//   const [postTags, setPostTags] = useState([]);
-//   const [tagInput, setTagInput] = useState("");
-//   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-//   const [selectedEmoji, setSelectedEmoji] = useState("");
-//   const [editingPostId, setEditingPostId] = useState(null);
-//   const [editPostText, setEditPostText] = useState("");
-//   const [searchTerm, setSearchTerm] = useState("");
-//   const [sortBy, setSortBy] = useState("newest");
-//   const [loadingPosts, setLoadingPosts] = useState(false);
-
-//   // Modal state for create post
-//   const [showCreateModal, setShowCreateModal] = useState(false);
-
-//   useEffect(() => {
-//     if (userId) {
-//       fetchPosts();
-//     }
-//     // eslint-disable-next-line
-//   }, [userId]);
-
-//   const fetchPosts = () => {
-//     setLoadingPosts(true);
-//     axios
-//       .get(API_URL)
-//       .then((res) => {
-//         setPosts(res.data);
-//         const initialLikedPosts = {};
-//         const initialSavedMap = {};
-//         res.data.forEach((post) => {
-//           if (Array.isArray(post.likes) && post.likes.includes(userId)) {
-//             initialLikedPosts[post._id] = true;
-//           }
-//           if (Array.isArray(post.savedBy) && post.savedBy.includes(userId)) {
-//             initialSavedMap[post._id] = true;
-//           }
-//         });
-//         setLikedPosts(initialLikedPosts);
-//         setSavedMap(initialSavedMap);
-//       })
-//       .catch((err) => console.error(err))
-//       .finally(() => setLoadingPosts(false));
-//   };
-
-//   const handleLike = (postId) => {
-//     const liked = likedPosts[postId];
-//     axios
-//       .patch(`${API_URL}/${postId}/like`, { userId })
-//       .then((res) => {
-//         setPosts((prev) =>
-//           prev.map((post) => (post._id === postId ? res.data : post))
-//         );
-//         setLikedPosts((prev) => ({ ...prev, [postId]: !liked }));
-//       })
-//       .catch((err) => console.error(err));
-//   };
-
-//   const handleSave = (postId, isSaved) => {
-//     if (!userId) {
-//       alert("Please log in to save posts.");
-//       return;
-//     }
-//     axios
-//       .patch(`${API_URL}/${postId}/save`, { userId })
-//       .then((res) => {
-//         setSavedMap((prev) => ({ ...prev, [postId]: !isSaved }));
-//         setPosts((prev) =>
-//           prev.map((post) => (post._id === postId ? res.data : post))
-//         );
-//       })
-//       .catch((err) => {
-//         console.error("Error saving/unsaving post:", err);
-//         alert("Failed to save/unsave post. Please try again.");
-//       });
-//   };
-
-//   const handlePost = () => {
-//     if (!newPost.trim()) return;
-//     const finalTags = Array.from(
-//       new Set([
-//         ...postTags,
-//         ...tagInput
-//           .split(",")
-//           .map((tag) => tag.trim())
-//           .filter((tag) => tag !== ""),
-//       ])
-//     );
-//     const postData = {
-//       name: userName,
-//       text: newPost + (selectedEmoji ? " " + selectedEmoji : ""),
-//       tags: finalTags,
-//       imageUrl: userProfileImageUrl,
-//       userId: userId,
-//     };
-//     axios
-//       .post(API_URL, postData)
-//       .then((res) => {
-//         setPosts((prev) => [res.data, ...prev]);
-//         setNewPost("");
-//         setPostTags([]);
-//         setTagInput("");
-//         setSelectedEmoji("");
-//         setShowEmojiPicker(false);
-//         setShowCreateModal(false);
-//       })
-//       .catch((err) => console.error(err));
-//   };
-
-//   const handleCommentChange = (postId, text) => {
-//     setCommentInputs({ ...commentInputs, [postId]: text });
-//   };
-
-//   const handleCommentSubmit = (postId) => {
-//     const commentText = commentInputs[postId];
-//     if (!commentText?.trim()) return;
-//     const commentData = {
-//       name: userName,
-//       text: commentText,
-//       imageUrl: userProfileImageUrl,
-//       userId: userId,
-//     };
-//     axios
-//       .post(`${API_URL}/${postId}/comment`, commentData)
-//       .then((res) => {
-//         setPosts((prev) =>
-//           prev.map((post) => (post._id === postId ? res.data : post))
-//         );
-//         setCommentInputs((prev) => ({ ...prev, [postId]: "" }));
-//       })
-//       .catch((err) => console.error(err));
-//   };
-
-//   const handleReplyChange = (commentId, text) => {
-//     setReplyInputs({ ...replyInputs, [commentId]: text });
-//   };
-
-//   const handleReplySubmit = (postId, commentId) => {
-//     const replyText = replyInputs[commentId];
-//     if (!replyText?.trim()) return;
-//     const replyData = {
-//       name: userName,
-//       text: replyText,
-//       imageUrl: userProfileImageUrl,
-//       userId: userId,
-//     };
-//     axios
-//       .post(`${API_URL}/${postId}/comments/${commentId}/reply`, replyData)
-//       .then((res) => {
-//         setPosts((prev) =>
-//           prev.map((post) => (post._id === postId ? res.data : post))
-//         );
-//         setReplyInputs((prev) => ({ ...prev, [commentId]: "" }));
-//       })
-//       .catch((err) => console.error(err));
-//   };
-
-//   const handleAddSuggestedTag = (tag) => {
-//     if (!postTags.includes(tag)) {
-//       setPostTags([...postTags, tag]);
-//     }
-//   };
-
-//   const handleRemoveTag = (tagToRemove) => {
-//     setPostTags(postTags.filter((tag) => tag !== tagToRemove));
-//   };
-
-//   const handleTagInputChange = (e) => {
-//     setTagInput(e.target.value);
-//   };
-
-//   const handleDeletePost = (postId) => {
-//     if (!window.confirm("Are you sure you want to delete this post?")) return;
-//     axios
-//       .delete(`${API_URL}/${postId}`, { data: { userId } })
-//       .then(() => {
-//         setPosts((prev) => prev.filter((post) => post._id !== postId));
-//       })
-//       .catch((err) => console.error(err));
-//   };
-
-//   const handleEditPost = (post) => {
-//     setEditingPostId(post._id);
-//     setEditPostText(post.text);
-//   };
-
-//   const handleEditPostSave = (postId) => {
-//     if (!editPostText.trim()) return;
-//     axios
-//       .patch(`${API_URL}/${postId}`, { text: editPostText, userId })
-//       .then((res) => {
-//         setPosts((prev) =>
-//           prev.map((post) => (post._id === postId ? res.data : post))
-//         );
-//         setEditingPostId(null);
-//         setEditPostText("");
-//       })
-//       .catch((err) => console.error(err));
-//   };
-
-//   const handleEditPostCancel = () => {
-//     setEditingPostId(null);
-//     setEditPostText("");
-//   };
-
-//   const handleShareEmoji = (emoji) => {
-//     setSelectedEmoji(emoji);
-//     setShowEmojiPicker(false);
-//   };
-
-//   const handleSearchChange = (e) => {
-//     setSearchTerm(e.target.value);
-//   };
-
-//   const handleSortChange = (e) => {
-//     setSortBy(e.target.value);
-//   };
-
-//   let filteredPosts = posts.filter((post) =>
-//     post.text?.toLowerCase().includes(searchTerm.toLowerCase())
-//   );
-
-//   if (sortBy === "newest") {
-//     filteredPosts = filteredPosts.sort(
-//       (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-//     );
-//   } else if (sortBy === "trending") {
-//     filteredPosts = filteredPosts.sort(
-//       (a, b) =>
-//         (Array.isArray(b.likes) ? b.likes.length : b.likes) -
-//         (Array.isArray(a.likes) ? a.likes.length : a.likes)
-//     );
-//   } else if (sortBy === "description") {
-//     filteredPosts = filteredPosts.sort((a, b) =>
-//       (a.text || "").localeCompare(b.text || "")
-//     );
-//   }
-
-//   if (!isLoaded)
-//     return <div className="p-4 text-center">Loading user data...</div>;
-//   if (!isSignedIn)
-//     return (
-//       <div className="p-4 text-center text-gray-600">
-//         Please sign in to create and view posts.
-//       </div>
-//     );
-
-//   return (
-//     <div className="flex flex-col min-h-screen p-4 gap-4 bg-[#F0F0F0]">
-//       {/* Sticky + Button */}
-//       <button
-//         className="fixed bottom-8 right-8 z-50 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg w-14 h-14 flex items-center justify-center text-3xl transition"
-//         onClick={() => setShowCreateModal(true)}
-//         title="Create Post"
-//         style={{ boxShadow: "0 4px 16px rgba(0,0,0,0.15)" }}
-//       >
-//         <FaPlus />
-//       </button>
-
-//       {/* Create Post Modal */}
-//       {showCreateModal && (
-//         <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-opacity-60">
-//           <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
-//             <button
-//               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-xl"
-//               onClick={() => setShowCreateModal(false)}
-//               title="Close"
-//             >
-//               <FaTimes />
-//             </button>
-//             <div className="flex items-center gap-3 mb-3">
-//               {userProfileImageUrl ? (
-//                 <img
-//                   src={userProfileImageUrl}
-//                   alt="User Profile"
-//                   className="w-10 h-10 rounded-full object-cover"
-//                 />
-//               ) : (
-//                 <FaUserCircle className="text-gray-400 text-3xl" />
-//               )}
-//               <span className="font-semibold text-gray-800">{userName}</span>
-//             </div>
-//             <textarea
-//               value={newPost}
-//               onChange={(e) => setNewPost(e.target.value)}
-//               className="w-full border border-gray-300 rounded p-2 resize-none text-sm"
-//               rows="3"
-//               placeholder="What's on your mind?"
-//             />
-//             {/* Tag Input and Suggested Tags */}
-//             <div className="mt-3">
-//               <input
-//                 type="text"
-//                 placeholder="Add tags (e.g., #MentalHealth, #Support)"
-//                 value={tagInput}
-//                 onChange={handleTagInputChange}
-//                 className="w-full border border-gray-300 rounded p-2 text-sm"
-//               />
-//               <div className="flex flex-wrap gap-2 mt-2">
-//                 {suggestedTags.map((tag) => (
-//                   <button
-//                     key={tag}
-//                     onClick={() => handleAddSuggestedTag(tag)}
-//                     className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs hover:bg-blue-200 transition"
-//                   >
-//                     #{tag}
-//                   </button>
-//                 ))}
-//               </div>
-//               <div className="flex flex-wrap gap-2 mt-2">
-//                 {postTags.map((tag) => (
-//                   <span
-//                     key={tag}
-//                     className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs flex items-center"
-//                   >
-//                     #{tag}
-//                     <button
-//                       onClick={() => handleRemoveTag(tag)}
-//                       className="ml-1 text-red-500 hover:text-red-700"
-//                     >
-//                       &times;
-//                     </button>
-//                   </span>
-//                 ))}
-//               </div>
-//             </div>
-//             {/* End Tag Input and Suggested Tags */}
-
-//             <div className="flex justify-between mt-2 flex-wrap gap-2">
-//               <div className="flex gap-2 flex-wrap relative max-w-full">
-//                 <button
-//                   type="button"
-//                   className="px-3 py-1 bg-gray-100 rounded text-sm hover:bg-gray-200 transition flex items-center gap-2"
-//                   onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-//                 >
-//                   <LuSmilePlus /> Share Emoji
-//                 </button>
-//                 {showEmojiPicker && (
-//                   <div className="flex gap-1 mt-2 max-w-full flex-wrap overflow-auto max-h-32">
-//                     {emojiList.map((emoji) => (
-//                       <button
-//                         key={emoji}
-//                         type="button"
-//                         className="text-xl"
-//                         onClick={() => handleShareEmoji(emoji)}
-//                       >
-//                         {emoji}
-//                       </button>
-//                     ))}
-//                   </div>
-//                 )}
-//                 {selectedEmoji && (
-//                   <span className="ml-2 text-xl">{selectedEmoji}</span>
-//                 )}
-//               </div>
-//               <button
-//                 onClick={handlePost}
-//                 className="px-4 py-1 bg-green-500 text-white rounded text-sm hover:bg-green-600 transition"
-//               >
-//                 Post
-//               </button>
-//             </div>
-//           </div>
-//         </div>
-//       )}
-
-//       <div className="flex flex-col md:flex-row gap-4 mb-6 p-4 bg-white rounded-lg shadow-md">
-//         {/* Search Input */}
-//         <div className="relative flex-1">
-//           <input
-//             type="text"
-//             placeholder="Search discussions..."
-//             value={searchTerm}
-//             onChange={handleSearchChange}
-//             className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-700 placeholder-gray-400 transition duration-200 ease-in-out text-sm"
-//           />
-//           <svg
-//             className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-//             xmlns="http://www.w3.org/2000/svg"
-//             fill="none"
-//             viewBox="0 0 24 24"
-//             stroke="currentColor"
-//             width="20"
-//             height="20"
-//           >
-//             <path
-//               strokeLinecap="round"
-//               strokeLinejoin="round"
-//               strokeWidth="2"
-//               d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-//             />
-//           </svg>
-//         </div>
-
-//         {/* Sort Select */}
-//         <div className="relative">
-//           <select
-//             value={sortBy}
-//             onChange={handleSortChange}
-//             className="appearance-none w-full md:w-auto pr-8 pl-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out cursor-pointer text-sm"
-//           >
-//             <option value="newest">Sort by: Newest</option>
-//             <option value="trending">Most Trending</option>
-//             <option value="description">By Description</option>
-//           </select>
-//           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-//             <svg
-//               className="fill-current h-4 w-4"
-//               xmlns="http://www.w3.org/2000/svg"
-//               viewBox="0 0 20 20"
-//             >
-//               <path d="M9.293 12.95l.707.707 3.536-3.536L12.536 9.293 10 11.828l-2.536-2.535z" />
-//             </svg>
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* Loading spinner for posts */}
-//       {loadingPosts ? (
-//         <div className="flex justify-center items-center py-10">
-//           <svg className="animate-spin text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48" width="80" height="80">
-//             <circle className="opacity-25" cx="24" cy="24" r="20" stroke="currentColor" strokeWidth="6"></circle>
-//             <path className="opacity-75" fill="currentColor" d="M8 24a16 16 0 0132 0h-8z"></path>
-//           </svg>
-//           <span className="ml-6 text-green-700 text-xl font-semibold">Loading posts...</span>
-//         </div>
-//       ) : (
-//         filteredPosts.map((post) => (
-//           <div key={post._id} className="bg-white p-4 rounded-lg shadow-md">
-//             <div className="flex items-center gap-3 mb-2">
-//               <img
-//                 src={
-//                   post.imageUrl
-//                     ? post.imageUrl
-//                     : `https://ui-avatars.com/api/?name=${encodeURIComponent(
-//                         post.name
-//                       )}&background=random`
-//                 }
-//                 className="w-9 h-9 rounded-full object-cover"
-//                 alt="Post Author"
-//               />
-//               <div>
-//                 <p className="font-semibold text-gray-800">{post.name}</p>
-//                 <p className="text-xs text-gray-500">
-//                   {moment(post.createdAt).fromNow()}
-//                 </p>
-//               </div>
-//               {post.userId === userId && (
-//                 <div className="ml-auto flex gap-2">
-//                   <button
-//                     className="text-blue-500 hover:text-blue-700"
-//                     title="Edit"
-//                     onClick={() => handleEditPost(post)}
-//                   >
-//                     <FaEdit />
-//                   </button>
-//                   <button
-//                     className="text-red-500 hover:text-red-700"
-//                     title="Delete"
-//                     onClick={() => handleDeletePost(post._id)}
-//                   >
-//                     <FaTrash />
-//                   </button>
-//                 </div>
-//               )}
-//             </div>
-
-//             {editingPostId === post._id ? (
-//               <div className="flex flex-col gap-2">
-//                 <textarea
-//                   value={editPostText}
-//                   onChange={(e) => setEditPostText(e.target.value)}
-//                   className="w-full border border-gray-300 rounded p-2 resize-none text-sm"
-//                   rows="3"
-//                 />
-//                 <div className="flex gap-2">
-//                   <button
-//                     className="px-3 py-1 bg-green-500 text-white rounded text-sm hover:bg-green-600 transition flex items-center gap-1"
-//                     onClick={() => handleEditPostSave(post._id)}
-//                   >
-//                     <FaCheck /> Save
-//                   </button>
-//                   <button
-//                     className="px-3 py-1 bg-gray-300 text-gray-700 rounded text-sm hover:bg-gray-400 transition flex items-center gap-1"
-//                     onClick={handleEditPostCancel}
-//                   >
-//                     <FaTimes /> Cancel
-//                   </button>
-//                 </div>
-//               </div>
-//             ) : (
-//               <p className="mt-2 text-gray-700 text-sm">{post.text}</p>
-//             )}
-
-//             <div className="flex flex-wrap gap-2 mt-2">
-//               {post.tags?.map((tag, i) => (
-//                 <span
-//                   key={i}
-//                   className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full"
-//                 >
-//                   #{tag}
-//                 </span>
-//               ))}
-//             </div>
-
-//             <div className="flex gap-5 text-sm text-gray-600 mt-3">
-//               <button
-//                 onClick={() => handleLike(post._id)}
-//                 className={`flex items-center gap-1 transition ${
-//                   likedPosts[post._id] ? "text-red-500" : "hover:text-red-500"
-//                 }`}
-//               >
-//                 <FaHeart /> {Array.isArray(post.likes) ? post.likes.length : post.likes}
-//               </button>
-//               <span className="flex items-center gap-1">
-//                 <FaComment /> {post.commentsCount}
-//               </span>
-//               <button
-//                 onClick={() => handleSave(post._id, !!savedMap[post._id])}
-//                 className={`flex items-center gap-1 transition ${
-//                   savedMap[post._id] ? "text-yellow-500" : "hover:text-yellow-500"
-//                 }`}
-//                 title={savedMap[post._id] ? "Unsave" : "Save"}
-//               >
-//                 {savedMap[post._id] ? <FaBookmark /> : <FaRegBookmark />}{" "}
-//                 {savedMap[post._id] ? "Saved" : "Save"}
-//               </button>
-//             </div>
-
-//             <div className="mt-3">
-//               <input
-//                 type="text"
-//                 placeholder="Add a comment..."
-//                 value={commentInputs[post._id] || ""}
-//                 onChange={(e) => handleCommentChange(post._id, e.target.value)}
-//                 className="w-full border border-gray-300 rounded p-1 text-sm"
-//               />
-//               <button
-//                 onClick={() => handleCommentSubmit(post._id)}
-//                 className="mt-1 px-3 py-1 bg-green-500 text-white rounded text-sm hover:bg-green-600 transition"
-//               >
-//                 Comment
-//               </button>
-//             </div>
-
-//             <div className="mt-3 space-y-2">
-//               {post.comments &&
-//                 post.comments.slice().reverse().map((cmt, i) => (
-//                   <div
-//                     key={cmt._id || i}
-//                     className="flex flex-col gap-1 pl-2 border-l-2 border-gray-200"
-//                   >
-//                     <div className="flex items-start gap-2">
-//                       <img
-//                         src={
-//                           cmt.imageUrl
-//                             ? cmt.imageUrl
-//                             : `https://ui-avatars.com/api/?name=${encodeURIComponent(
-//                                 cmt.name
-//                               )}&background=random`
-//                         }
-//                         alt="Commenter"
-//                         className="w-6 h-6 rounded-full mt-1"
-//                       />
-//                       <div>
-//                         <p className="text-sm">
-//                           <span className="font-semibold">{cmt.name}</span>:{" "}
-//                           {cmt.text}
-//                         </p>
-//                         <p className="text-xs text-gray-400">
-//                           {moment(cmt.time).fromNow()}
-//                         </p>
-//                         <button
-//                           className="text-xs text-blue-500 hover:underline flex items-center gap-1 mt-1"
-//                           onClick={() =>
-//                             setReplyInputs({
-//                               ...replyInputs,
-//                               [cmt._id]:
-//                                 replyInputs[cmt._id] === undefined
-//                                   ? ""
-//                                   : undefined,
-//                             })
-//                           }
-//                         >
-//                           <FaReply className="text-xs" /> Reply
-//                         </button>
-//                       </div>
-//                     </div>
-//                     {replyInputs[cmt._id] !== undefined && (
-//                       <div className="ml-8 mt-2">
-//                         <input
-//                           type="text"
-//                           placeholder="Add a reply..."
-//                           value={replyInputs[cmt._id] || ""}
-//                           onChange={(e) =>
-//                             handleReplyChange(cmt._id, e.target.value)
-//                           }
-//                           className="w-full border border-gray-300 rounded p-1 text-sm"
-//                         />
-//                         <button
-//                           onClick={() => handleReplySubmit(post._id, cmt._id)}
-//                           className="mt-1 px-3 py-1 bg-blue-500 text-white rounded text-sm hover:bg-blue-600 transition"
-//                         >
-//                           Reply
-//                         </button>
-//                       </div>
-//                     )}
-//                     {cmt.replies && cmt.replies.length > 0 && (
-//                       <div className="ml-8 mt-2 space-y-1">
-//                         {cmt.replies
-//                           .slice()
-//                           .reverse()
-//                           .map((reply, j) => (
-//                             <div key={j} className="flex items-start gap-2">
-//                               <img
-//                                 src={
-//                                   reply.imageUrl
-//                                     ? reply.imageUrl
-//                                     : `https://ui-avatars.com/api/?name=${encodeURIComponent(
-//                                         reply.name
-//                                       )}&background=random`
-//                                 }
-//                                 alt="Replier"
-//                                 className="w-5 h-5 rounded-full mt-1"
-//                               />
-//                               <div>
-//                                 <p className="text-xs">
-//                                   <span className="font-semibold">
-//                                     {reply.name}
-//                                   </span>
-//                                   : {reply.text}
-//                                 </p>
-//                                 <p className="text-xs text-gray-400">
-//                                   {moment(reply.time).fromNow()}
-//                                 </p>
-//                               </div>
-//                             </div>
-//                           ))}
-//                       </div>
-//                     )}
-//                   </div>
-//                 ))}
-//             </div>
-//           </div>
-//         ))
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Item6;
-
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 
 const Item6 = () => {
-  return (
-    <div>Item6</div>
-  )
-}
+  const [selectedMetric, setSelectedMetric] = useState('overview');
+  const [timeRange, setTimeRange] = useState('7d');
+  const [customers, setCustomers] = useState([]);
+  const [leads, setLeads] = useState([]);
+  const [automationRules, setAutomationRules] = useState([]);
 
-export default Item6
+  // Mock data
+  useEffect(() => {
+    // Initialize mock customer data
+    setCustomers([
+      { id: 1, name: 'John Smith', email: 'john@example.com', status: 'Active', value: 15000, lastContact: '2025-06-07', company: 'Tech Corp' },
+      { id: 2, name: 'Sarah Johnson', email: 'sarah@example.com', status: 'Lead', value: 8500, lastContact: '2025-06-06', company: 'Design Studio' },
+      { id: 3, name: 'Mike Davis', email: 'mike@example.com', status: 'Prospect', value: 22000, lastContact: '2025-06-05', company: 'Manufacturing Inc' },
+      { id: 4, name: 'Emma Wilson', email: 'emma@example.com', status: 'Active', value: 12000, lastContact: '2025-06-08', company: 'Retail Plus' },
+      { id: 5, name: 'David Brown', email: 'david@example.com', status: 'Inactive', value: 5000, lastContact: '2025-05-28', company: 'Service Co' }
+    ]);
+
+    // Initialize mock leads data
+    setLeads([
+      { id: 1, name: 'Alex Chen', source: 'Website', score: 85, stage: 'Qualified', value: 18000, assignedTo: 'Sales Rep 1' },
+      { id: 2, name: 'Lisa Parker', source: 'Social Media', score: 72, stage: 'Contact Made', value: 9500, assignedTo: 'Sales Rep 2' },
+      { id: 3, name: 'Tom Anderson', source: 'Referral', score: 91, stage: 'Proposal Sent', value: 28000, assignedTo: 'Sales Rep 1' },
+      { id: 4, name: 'Maria Garcia', source: 'Cold Email', score: 68, stage: 'Initial Contact', value: 12000, assignedTo: 'Sales Rep 3' }
+    ]);
+
+    // Initialize automation rules
+    setAutomationRules([
+      { id: 1, name: 'Welcome Email Sequence', trigger: 'New Lead', status: 'Active', lastRun: '2025-06-08 09:30' },
+      { id: 2, name: 'Follow-up Reminder', trigger: 'No Contact 7 Days', status: 'Active', lastRun: '2025-06-08 10:15' },
+      { id: 3, name: 'Lead Scoring Update', trigger: 'Website Activity', status: 'Active', lastRun: '2025-06-08 11:00' },
+      { id: 4, name: 'Contract Renewal Alert', trigger: '30 Days Before Expiry', status: 'Paused', lastRun: '2025-06-07 14:20' }
+    ]);
+  }, []);
+
+  const metrics = {
+    totalCustomers: customers.length,
+    activeCustomers: customers.filter(c => c.status === 'Active').length,
+    totalRevenue: customers.reduce((sum, c) => sum + c.value, 0),
+    conversionRate: 67.5,
+    averageDealSize: 14500,
+    leadsGenerated: leads.length,
+    pipelineValue: leads.reduce((sum, l) => sum + l.value, 0),
+    automationRuns: 147
+  };
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'Active': return 'bg-green-100 text-green-800';
+      case 'Lead': return 'bg-blue-100 text-blue-800';
+      case 'Prospect': return 'bg-yellow-100 text-yellow-800';
+      case 'Inactive': return 'bg-red-100 text-red-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const getLeadStageColor = (stage) => {
+    switch (stage) {
+      case 'Qualified': return 'bg-green-100 text-green-800';
+      case 'Contact Made': return 'bg-blue-100 text-blue-800';
+      case 'Proposal Sent': return 'bg-purple-100 text-purple-800';
+      case 'Initial Contact': return 'bg-yellow-100 text-yellow-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-6">
+      {/* Header */}
+      <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 flex items-center">
+              <svg className="w-8 h-8 text-blue-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+              </svg>
+              CRM Dashboard
+            </h1>
+            <p className="text-gray-600 mt-1">Automated Customer Relationship Management</p>
+          </div>
+          <div className="flex items-center space-x-4">
+            <select 
+              value={timeRange} 
+              onChange={(e) => setTimeRange(e.target.value)}
+              className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+              <option value="7d">Last 7 Days</option>
+              <option value="30d">Last 30 Days</option>
+              <option value="90d">Last 90 Days</option>
+              <option value="1y">Last Year</option>
+            </select>
+            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+              Generate Report
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Metrics Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+        <div className="bg-white rounded-xl shadow-lg p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-600">Total Customers</p>
+              <p className="text-3xl font-bold text-gray-900">{metrics.totalCustomers}</p>
+              <p className="text-sm text-green-600 font-medium">+12% from last month</p>
+            </div>
+            <div className="bg-blue-100 rounded-full p-3">
+              <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-lg p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-600">Revenue</p>
+              <p className="text-3xl font-bold text-gray-900">${metrics.totalRevenue.toLocaleString()}</p>
+              <p className="text-sm text-green-600 font-medium">+23% from last month</p>
+            </div>
+            <div className="bg-green-100 rounded-full p-3">
+              <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-lg p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-600">Conversion Rate</p>
+              <p className="text-3xl font-bold text-gray-900">{metrics.conversionRate}%</p>
+              <p className="text-sm text-green-600 font-medium">+5.2% improvement</p>
+            </div>
+            <div className="bg-purple-100 rounded-full p-3">
+              <svg className="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-lg p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-600">Pipeline Value</p>
+              <p className="text-3xl font-bold text-gray-900">${metrics.pipelineValue.toLocaleString()}</p>
+              <p className="text-sm text-blue-600 font-medium">{leads.length} active leads</p>
+            </div>
+            <div className="bg-yellow-100 rounded-full p-3">
+              <svg className="w-6 h-6 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v6.586l-1.293-1.293a1 1 0 00-1.414 1.414L17 17.414V18a2 2 0 01-2 2H5a2 2 0 01-2-2v-8a2 2 0 012-2h1zm4-3a1 1 0 00-1 1v1h2V4a1 1 0 00-1-1z" clipRule="evenodd"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Navigation Tabs */}
+      <div className="bg-white rounded-xl shadow-lg mb-6">
+        <div className="border-b border-gray-200">
+          <nav className="flex space-x-8 px-6">
+            {['overview', 'customers', 'leads', 'automation'].map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setSelectedMetric(tab)}
+                className={`py-4 px-1 border-b-2 font-medium text-sm capitalize transition-colors ${
+                  selectedMetric === tab
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                {tab}
+              </button>
+            ))}
+          </nav>
+        </div>
+
+        <div className="p-6">
+          {selectedMetric === 'overview' && (
+            <div className="space-y-6">
+              {/* Sales Chart */}
+              <div className="bg-gray-50 rounded-lg p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Sales Performance</h3>
+                <div className="h-64 flex items-end justify-between space-x-2">
+                  {[65, 85, 45, 92, 78, 88, 95].map((height, index) => (
+                    <div key={index} className="flex flex-col items-center">
+                      <div 
+                        className="w-12 bg-blue-500 rounded-t transition-all hover:bg-blue-600"
+                        style={{ height: `${height}%` }}
+                      ></div>
+                      <span className="text-xs text-gray-600 mt-2">
+                        {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][index]}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Quick Stats */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg p-4 text-white">
+                  <h4 className="font-semibold">Active Deals</h4>
+                  <p className="text-2xl font-bold">24</p>
+                  <p className="text-sm opacity-90">Worth $342K</p>
+                </div>
+                <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-lg p-4 text-white">
+                  <h4 className="font-semibold">Closed Deals</h4>
+                  <p className="text-2xl font-bold">12</p>
+                  <p className="text-sm opacity-90">This month</p>
+                </div>
+                <div className="bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg p-4 text-white">
+                  <h4 className="font-semibold">Follow-ups</h4>
+                  <p className="text-2xl font-bold">8</p>
+                  <p className="text-sm opacity-90">Due today</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {selectedMetric === 'customers' && (
+            <div>
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-semibold text-gray-900">Customer Management</h3>
+                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                  Add Customer
+                </button>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Company</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Value</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Contact</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {customers.map((customer) => (
+                      <tr key={customer.id} className="hover:bg-gray-50">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div>
+                            <div className="text-sm font-medium text-gray-900">{customer.name}</div>
+                            <div className="text-sm text-gray-500">{customer.email}</div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {customer.company}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(customer.status)}`}>
+                            {customer.status}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          ${customer.value.toLocaleString()}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {customer.lastContact}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                          <button className="text-blue-600 hover:text-blue-900 mr-3">Edit</button>
+                          <button className="text-green-600 hover:text-green-900">Contact</button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {selectedMetric === 'leads' && (
+            <div>
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-semibold text-gray-900">Lead Management</h3>
+                <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                  Import Leads
+                </button>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lead</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Source</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Score</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stage</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Value</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Assigned To</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {leads.map((lead) => (
+                      <tr key={lead.id} className="hover:bg-gray-50">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          {lead.name}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {lead.source}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <div className="w-16 bg-gray-200 rounded-full h-2">
+                              <div 
+                                className="bg-blue-600 h-2 rounded-full" 
+                                style={{ width: `${lead.score}%` }}
+                              ></div>
+                            </div>
+                            <span className="ml-2 text-sm text-gray-900">{lead.score}</span>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getLeadStageColor(lead.stage)}`}>
+                            {lead.stage}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          ${lead.value.toLocaleString()}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {lead.assignedTo}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                          <button className="text-blue-600 hover:text-blue-900 mr-3">View</button>
+                          <button className="text-green-600 hover:text-green-900">Convert</button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {selectedMetric === 'automation' && (
+            <div>
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-semibold text-gray-900">Automation Rules</h3>
+                <button className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors">
+                  Create Rule
+                </button>
+              </div>
+              
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                <div className="bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg p-6 text-white">
+                  <h4 className="font-semibold mb-2">Automation Stats</h4>
+                  <div className="space-y-2">
+                    <div className="flex justify-between">
+                      <span>Total Runs Today:</span>
+                      <span className="font-bold">{metrics.automationRuns}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Active Rules:</span>
+                      <span className="font-bold">{automationRules.filter(r => r.status === 'Active').length}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Success Rate:</span>
+                      <span className="font-bold">98.5%</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg p-6 text-white">
+                  <h4 className="font-semibold mb-2">Recent Activity</h4>
+                  <div className="space-y-2 text-sm">
+                    <div>✓ Welcome email sent to 3 new leads</div>
+                    <div>✓ Follow-up reminders created for 5 contacts</div>
+                    <div>✓ Lead scores updated for 12 prospects</div>
+                    <div>⚠ Contract renewal alert triggered</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rule Name</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Trigger</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Run</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {automationRules.map((rule) => (
+                      <tr key={rule.id} className="hover:bg-gray-50">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          {rule.name}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {rule.trigger}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                            rule.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                          }`}>
+                            {rule.status}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {rule.lastRun}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                          <button className="text-blue-600 hover:text-blue-900 mr-3">Edit</button>
+                          <button className={`${rule.status === 'Active' ? 'text-red-600 hover:text-red-900' : 'text-green-600 hover:text-green-900'}`}>
+                            {rule.status === 'Active' ? 'Pause' : 'Activate'}
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Item6;
