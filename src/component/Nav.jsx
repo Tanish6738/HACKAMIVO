@@ -12,7 +12,6 @@ import StarIcon from '@mui/icons-material/Star';
 import { useUser, SignOutButton } from '@clerk/clerk-react';
 import Logo from "../images/logo.jpg"; // Assuming you have a logo image
 
-
 const linkStyle = {
   textDecoration: 'none',
   color: 'inherit',
@@ -22,6 +21,7 @@ const pages = [
   { label: 'Home', path: '/' },
   { label: 'About', path: '/about' },
   { label: 'Contact', path: '/Contact' },
+  { label: 'How It Works', path: '/howitwork' }
 ];
 
 function ResponsiveAppBar() {

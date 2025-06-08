@@ -91,6 +91,14 @@ function App() {
             </SignedIn>
           }
         />
+        <Route
+          path='/howitwork'
+          element={
+            <SignedIn>
+              <Howitwork   />
+            </SignedIn>
+          }
+        />
 
         {/* Redirect all other routes to login when signed out */}
         <Route
