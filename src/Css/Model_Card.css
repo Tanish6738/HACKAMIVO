@@ -1,0 +1,11 @@
+#model{
+    height: 80%;
+    width: 40vw;
+    overflow-y: scroll;
+}
+
+#model_button{
+    color: black;
+    font-size: 1vmax;
+    font-weight: 600;
+}

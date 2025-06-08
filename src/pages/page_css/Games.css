@@ -1,0 +1,51 @@
+/* General Page Styling */
+body {
+    background-color: #121212;
+    
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Game List Styles */
+  .game-list {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  
+  .game-card {
+    display: flex;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 8px;
+    background-color: #2b2b2b;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .game-card:hover {
+    background-color: #333;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .game-card img {
+    border-radius: 8px;
+  }
+  
+  .game-info {
+    flex: 1;
+    padding-left: 15px;
+  }
+  
+  .game-info h3 {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .game-info p {
+    color: gray;
+    font-size: 14px;
+  }
+  

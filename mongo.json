@@ -1,0 +1,11 @@
+db.doc.aggregate([{
+    $project:{maker:1 ,"engine.cc":1,transmission:1}
+},
+{
+       $match:{
+          transmission:"Manual"
+    }
+
+}
+ 
+])

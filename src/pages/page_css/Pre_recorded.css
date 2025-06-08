@@ -1,0 +1,55 @@
+.playlist {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #0b0b0b; /* Light gray background */
+  }
+  
+  .playlist h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #f00; /* YouTube-like red color */
+  }
+  
+  .video-card {
+    display: flex;
+    margin-bottom: 20px;
+    border: 1px solid #ccc; /* Light border around each card */
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: all 0.2s ease-in-out; /* Smooth transitions for hover effects */
+  }
+  
+  .video-card:hover {
+    background-color: #f0f0f0; /* Light gray background on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Increased shadow on hover */
+    transform: translateY(-2px);
+/* Slight lift on hover */
+  }
+  
+  .video-card img {
+    width: 200px;
+    margin-right: 20px;
+    border-top-left-radius: 5px; /* Rounded corners for the image */
+    border-bottom-left-radius: 5px;
+  }
+  
+  .video-info {
+    flex: 1;
+    padding: 10px;
+    
+  }
+ 
+  
+  .video-info h3 {
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #ffffff; /* Darker text color */
+  }
+  
+  .video-info p {
+    color: #ffffff; /* Lighter text color for details */
+    font-size: 14px;
+    margin: 0;
+  }
+  /* Add more CSS styles as needed */

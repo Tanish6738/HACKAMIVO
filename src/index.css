@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+
+.button_css1 {
+  @apply px-6 py-2 rounded-full border-2 border-green-500 text-green-500 hover:bg-green-50 transition;
+}
+
+
+.button_css2 {
+  @apply px-6 py-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition;
+}
+
+.button_box{
+    @apply flex space-x-4
+}
+
+.text_style{
+  @apply text-3xl font-bold text-shadow-lg mb-2
+}
+
+
+  /* Hide scrollbar for all elements */
+  * {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  *::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+    display: none;
+  }
+

@@ -1,0 +1,81 @@
+.heroContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 100vh;
+    background-color: #404040; /* Dark gray background */
+    color: #fff; /* White text */
+    padding: 20px;
+    background-size: cover;
+    background-position: center;
+    animation: backgroundAnimation 15s infinite;
+  }
+  @keyframes backgroundAnimation {
+    0% {
+        background-image: url('../images/photo1.jpeg');
+    }
+    33% {
+        background-image: url('../images/image2.jpeg');
+    }
+    66% {
+        background-image: url('../images/image3.jpeg');
+    }
+    100% {
+        background-image: url('../images/image4.jpeg');
+    }
+}
+  /* Hero title */
+  .heroTitle {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  /* Hero subtitle */
+  .heroSubtitle {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+    max-width: 600px;
+  }
+  
+  /* Button container */
+  .heroButtons {
+    display: flex;
+    gap: 15px;
+  }
+  
+  /* Button styles */
+  .heroButton {
+    font-size: 1rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  /* Primary button */
+  .primaryButton {
+    background-color: #4caf50; /* Green */
+    color: #fff;
+  }
+  
+  .primaryButton:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+  }
+  
+  /* Secondary button */
+  .secondaryButton {
+    background-color: transparent;
+    color: #fff;
+    border: 2px solid #fff;
+  }
+  
+  .secondaryButton:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: scale(1.05);
+  }

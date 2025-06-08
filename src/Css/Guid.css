@@ -1,0 +1,61 @@
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.tabs {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  border: 2px solid black;
+  gap: 10%;
+}
+
+.tab {
+  background-color: transparent;
+  margin: 0 10px;
+  cursor: pointer;
+font-size: xx-large;
+}
+
+.content {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.meditation-list {
+  list-style: none;
+  padding: 0;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.control-button {
+  border: none;
+  background-color: transparent;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+/* Responsive layout */
+@media screen and (max-width: 768px) {
+  .tabs {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tab {
+    margin: 5px 0;
+  }
+}

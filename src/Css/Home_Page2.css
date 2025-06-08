@@ -1,0 +1,123 @@
+/* Container styles */
+.toolsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #7a7a7a; /* Light gray background */
+    color: #fff; /* White text color */
+    text-align: center;
+    padding: 20px;
+    min-height: 100vh;
+    background-color: black;
+  }
+  
+  /* Main heading */
+  .mainHeading {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  /* Subheading */
+  .subHeading {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+  }
+  
+  /* Grid of tools */
+ /* Grid of tools */
+.toolsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Ensure 2 columns */
+  grid-template-rows: repeat(2, auto); /* Ensure 2 rows */
+  gap: 20px;
+  width: 40%;
+  max-width: 1200px;
+}
+
+  
+  /* Individual tool card */
+  .toolCard {
+    background-color: #888; /* Medium gray for cards */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+    background-color: white;
+    color: black;
+box-shadow: 4px 6px 5px white;
+
+  }
+  
+  .toolCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Icon */
+  .toolIcon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  /* Tool title */
+  .toolTitle {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  /* Tool description */
+  .toolDescription {
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+  
+  /* Footer styles */
+  .footer {
+    margin-top: 2rem;
+  }
+  
+  .footerHeading {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .footerLink {
+    font-size: 1rem;
+    color: #4caf50;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .footerLink:hover {
+    text-decoration: underline;
+  }
+  
+
+
+
+  .toolButton {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    padding: 15px 32px; /* Spacing inside the button */
+    text-align: center; /* Center the text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Inline block element */
+    font-size: 16px; /* Set font size */
+    border-radius: 8px; /* Rounded corners */
+    border: none; /* Remove border */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+}
+
+.toolButton:hover {
+    background-color: #45a049; /* Darker green when hovered */
+    transform: scale(1.05); /* Slightly enlarge button */
+}
+
+.toolButton:active {
+    background-color: #3e8e41; /* Even darker green when clicked */
+    transform: scale(1); /* Maintain size on click */
+}

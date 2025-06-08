@@ -1,0 +1,107 @@
+.music-player {
+  width: 100%;
+  max-width: 500px;
+  height: 60vh;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.track-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.track {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #fff;
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 400px;
+  justify-content: flex-start;
+}
+
+.track:hover {
+  background-color: #e0e0e0;
+}
+
+.track .image-item {
+  width: 40px;
+  height: 40px;
+  margin-right: 15px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: all 0.3s ease;
+}
+
+.track .image-item:hover {
+  transform: scale(1.1);
+}
+
+.now-playing {
+  margin-top: 20px;
+}
+
+.current-track-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.current-track-info .current-track-image {
+  width: 50px;
+  height: 50px;
+  margin-right: 15px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.track-title {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.now-playing{
+  margin-top: 1vmax;
+}
+.playback-controls button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin: 0 15px;
+}
+
+.playback-controls svg {
+  width: 30px;
+  height: 30px;
+  fill: #333;
+}
+
+.playback-controls button:hover svg {
+  fill: #007bff;
+}
+
+.audio-player {
+  display: none;
+}
+
+#butnX{
+font-size: 1.6vmax;
+
+}
+#icon_player{
+  font-size: 1.3vmax;
+}
